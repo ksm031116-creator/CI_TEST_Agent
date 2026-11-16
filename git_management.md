@@ -89,8 +89,8 @@ Thumbs.db
 
 - `main`은 항상 테스트가 통과하는 상태로 유지한다. `main`에 직접 커밋하지 않는다. 단, 0단계 초기 설정 커밋은 예외로 한다.
 - 혼자 개발해도 PR로 병합한다. 이 서비스의 CI가 생긴 뒤에는 CI 통과를 병합 조건으로 설정한다.
-- 병합은 squash merge를 기본으로 하고, PR 제목을 커밋 규칙에 맞춘다. 병합한 브랜치는 삭제한다.
-- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash --delete-branch`.
+- 병합은 squash merge만 사용하고, PR 제목을 커밋 규칙에 맞춘다. PR 제목이 `main`의 커밋 제목이 된다. 병합한 브랜치는 GitHub에서 자동 삭제된다.
+- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash`. 병합 후 로컬에서는 `git switch main`, `git pull --ff-only`, `git fetch --prune`으로 정리한다.
 
 **`main`은 GitHub 브랜치 보호 규칙으로 강제한다.**
 
@@ -105,7 +105,16 @@ Thumbs.db
 | 대화 해결 필수 | 켬 | 해결하지 않은 리뷰 코멘트가 있으면 병합하지 않는다 |
 | 필수 CI 검사 | 미설정 | `.github/workflows/`를 추가하는 단계에서 해당 작업 이름을 필수 검사로 등록한다 |
 
-- 보호 규칙을 바꾸면 이 표도 같은 PR에서 갱신한다.
+저장소 병합 설정도 같은 날 다음과 같이 맞췄다.
+
+| 설정 | 값 | 이유 |
+|---|---|---|
+| 허용 병합 방식 | squash merge만 허용. merge commit·rebase merge 금지 | PR 하나가 `main`의 커밋 하나가 되어 이력과 PR 번호가 일대일로 대응한다 |
+| squash 커밋 제목 | PR 제목 | 커밋 규칙을 PR 제목에서 한 번만 확인하면 된다 |
+| squash 커밋 본문 | 브랜치 커밋 메시지 모음 | 각 커밋의 `Co-Authored-By` 등 트레일러를 보존한다 |
+| 병합 후 브랜치 자동 삭제 | 켬 | 병합한 브랜치를 수동으로 지우지 않아도 된다 |
+
+- 보호 규칙이나 병합 설정을 바꾸면 위 표들도 같은 PR에서 갱신한다.
 - 긴급 상황에서도 보호 규칙을 끄고 직접 푸시하지 않는다. 필요하면 `fix/` 브랜치와 PR로 처리한다.
 - `exp/` 브랜치는 결과를 채택하지 않더라도 결론을 `docs/decisions/`에 기록한 뒤 정리한다. 결과 수치의 근거가 된 커밋은 태그로 남긴다.
 
