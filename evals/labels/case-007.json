@@ -1,0 +1,25 @@
+{
+  "case_id": "case-007",
+  "root_cause": {
+    "file": "tests/conftest.py",
+    "line": 21,
+    "summary": "catalog fixture의 MILK 상품에서 `taxable=False`가 빠져 과세 상품이 되었다."
+  },
+  "fault_commit_message": "test: 픽스처 상품 정의 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "conftest.py catalog fixture의 MILK가 면세로 정의되지 않음"
+  ],
+  "required_evidence": [
+    "로그의 `assert Decimal('180') == Decimal('0')` (1800원의 10% 세금이 계산됨)",
+    "conftest.py의 `Product(\"MILK\", \"Milk\", Decimal(\"1800\"))`",
+    "catalog.py Product의 `taxable` 기본값이 True"
+  ],
+  "incorrect_conclusions": [
+    "pricing.line_tax가 taxable 플래그를 무시함",
+    "세율 설정 오류"
+  ],
+  "fix_summary": "fixture의 MILK에 `taxable=False`를 되돌린다."
+}

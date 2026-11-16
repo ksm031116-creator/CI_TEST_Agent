@@ -1,0 +1,24 @@
+{
+  "case_id": "case-012",
+  "root_cause": {
+    "file": "pyproject.toml",
+    "line": 9,
+    "summary": "테스트 의존성이 존재하지 않는 버전(`pytest>=99`)을 요구해 설치 단계에서 실패한다. pytest는 실행되지 않았다."
+  },
+  "fault_commit_message": "chore: 테스트 의존성 버전 상향",
+  "acceptable_conclusions": [
+    "out_of_scope"
+  ],
+  "expected_reason_code": "no_junit",
+  "accepted_candidates": [],
+  "required_evidence": [
+    "JUnit XML 없음",
+    "작업의 `Install` 단계 실패"
+  ],
+  "incorrect_conclusions": [
+    "테스트 코드 결함으로 단정",
+    "시스템 오류로 처리"
+  ],
+  "fix_summary": "`pytest>=8`로 되돌린다.",
+  "notes": "첫 버전은 테스트 실행 전 단계의 실패를 분석하지 않고 사유만 표시한다."
+}

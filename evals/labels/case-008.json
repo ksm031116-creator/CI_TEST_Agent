@@ -1,0 +1,26 @@
+{
+  "case_id": "case-008",
+  "root_cause": {
+    "file": "src/shopcalc/pricing.py",
+    "line": 18,
+    "summary": "대량 할인 조건이 `>=`에서 `>`로 바뀌어 기준 수량과 같은 주문에 할인이 빠진다."
+  },
+  "fault_commit_message": "refactor: 할인 조건 가독성 개선",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "line_subtotal의 경계 조건 오류(`quantity > threshold`)"
+  ],
+  "required_evidence": [
+    "로그의 `assert Decimal('10000') == Decimal('9500')`",
+    "pricing.py의 `if quantity > config.bulk_discount_threshold:`",
+    "config.py의 기준 수량이 여전히 10임"
+  ],
+  "incorrect_conclusions": [
+    "config.py의 bulk_discount_threshold 변경",
+    "할인율 변경"
+  ],
+  "fix_summary": "조건을 `>=`로 되돌린다.",
+  "notes": "case-002와 로그 증상이 같고 원인이 다르다. 코드를 보지 않으면 둘을 구분할 수 없다."
+}

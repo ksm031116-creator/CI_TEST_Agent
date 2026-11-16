@@ -1,0 +1,247 @@
+pytest	Set up job	﻿2026-11-16T07:48:01.1080432Z Current runner version: '2.338.2'
+pytest	Set up job	2026-11-16T07:48:01.1123696Z ##[group]Runner Image Provisioner
+pytest	Set up job	2026-11-16T07:48:01.1124439Z Hosted Compute Agent
+pytest	Set up job	2026-11-16T07:48:01.1124923Z Version: 20261103.629
+pytest	Set up job	2026-11-16T07:48:01.1125567Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+pytest	Set up job	2026-11-16T07:48:01.1126241Z Build Date: 2026-11-03T17:26:59Z
+pytest	Set up job	2026-11-16T07:48:01.1126873Z Worker ID: {df55e338-2921-4090-b95c-0133da7c2af1}
+pytest	Set up job	2026-11-16T07:48:01.1127583Z Region: centralus
+pytest	Set up job	2026-11-16T07:48:01.1128038Z Cloud: Azure
+pytest	Set up job	2026-11-16T07:48:01.1128598Z ##[endgroup]
+pytest	Set up job	2026-11-16T07:48:01.1129875Z ##[group]Operating System
+pytest	Set up job	2026-11-16T07:48:01.1130457Z Ubuntu
+pytest	Set up job	2026-11-16T07:48:01.1130912Z 24.04.5
+pytest	Set up job	2026-11-16T07:48:01.1131348Z LTS
+pytest	Set up job	2026-11-16T07:48:01.1152103Z ##[endgroup]
+pytest	Set up job	2026-11-16T07:48:01.1152712Z ##[group]Runner Image
+pytest	Set up job	2026-11-16T07:48:01.1153347Z Image: ubuntu-24.04
+pytest	Set up job	2026-11-16T07:48:01.1153904Z Version: 20261111.370.1
+pytest	Set up job	2026-11-16T07:48:01.1154821Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+pytest	Set up job	2026-11-16T07:48:01.1156423Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+pytest	Set up job	2026-11-16T07:48:01.1157696Z ##[endgroup]
+pytest	Set up job	2026-11-16T07:48:01.1158691Z ##[group]GITHUB_TOKEN Permissions
+pytest	Set up job	2026-11-16T07:48:01.1160722Z Contents: read
+pytest	Set up job	2026-11-16T07:48:01.1161260Z Metadata: read
+pytest	Set up job	2026-11-16T07:48:01.1161997Z ##[endgroup]
+pytest	Set up job	2026-11-16T07:48:01.1164028Z Secret source: Actions
+pytest	Set up job	2026-11-16T07:48:01.1164844Z Cache mode: write
+pytest	Set up job	2026-11-16T07:48:01.1165809Z Prepare workflow directory
+pytest	Set up job	2026-11-16T07:48:01.1502127Z Prepare all required actions
+pytest	Set up job	2026-11-16T07:48:01.1579091Z Getting action download info
+pytest	Set up job	2026-11-16T07:48:01.4165135Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+pytest	Set up job	2026-11-16T07:48:01.5220442Z Download action repository 'actions/setup-python@v7' (SHA:6d4fd22b20465ccc0f7354476588e8df7c9ca0e0)
+pytest	Set up job	2026-11-16T07:48:01.6773494Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+pytest	Set up job	2026-11-16T07:48:01.8963121Z Complete job name: pytest
+pytest	Run actions/checkout@v7	﻿2026-11-16T07:48:01.9500385Z ##[group]Run actions/checkout@v7
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9500786Z with:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9501077Z   repository: ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9503395Z   token: ***
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9503619Z   ssh-strict: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9503844Z   ssh-user: git
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9504073Z   persist-credentials: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9504328Z   clean: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9504561Z   sparse-checkout-cone-mode: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9504827Z   fetch-depth: 1
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9505049Z   fetch-tags: false
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9505280Z   show-progress: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9505516Z   lfs: false
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9505730Z   submodules: false
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9505964Z   set-safe-directory: true
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9506226Z   allow-unsafe-pr-checkout: false
+pytest	Run actions/checkout@v7	2026-11-16T07:48:01.9506585Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.1269762Z Syncing repository: ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2017669Z ##[group]Getting Git version info
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2023114Z Working directory is '/home/runner/work/ci-failure-target/ci-failure-target'
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2078479Z [command]/usr/bin/git version
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2079018Z git version 2.56.1
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2113097Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2121249Z Temporarily overriding HOME='/home/runner/work/_temp/de58e912-dc7b-4baa-acf6-b5f77ec46925' before making global git config changes
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2122698Z Adding repository directory to the temporary git global config as a safe directory
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2123859Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2125562Z Deleting the contents of '/home/runner/work/ci-failure-target/ci-failure-target'
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2126610Z ##[group]Determining repository object format
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2127362Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2128056Z ##[group]Initializing the repository
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2129004Z [command]/usr/bin/git init /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2129912Z hint: Using 'master' as the name for the initial branch. This default branch name
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2130774Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2131620Z hint: to use in all of your new repositories, which will suppress this warning,
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2132389Z hint: call:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2132788Z hint:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2133261Z hint: 	git config --global init.defaultBranch <name>
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2135112Z hint:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2135657Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2136506Z hint: 'development'. The just-created branch can be renamed via this command:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2137187Z hint:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2137591Z hint: 	git branch -m <name>
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2138040Z hint:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2138620Z hint: Disable this message with "git config set advice.defaultBranchName false"
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2139619Z Initialized empty Git repository in /home/runner/work/ci-failure-target/ci-failure-target/.git/
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2141295Z [command]/usr/bin/git remote add origin https://github.com/ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2142924Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2143587Z ##[group]Disabling automatic garbage collection
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2144457Z [command]/usr/bin/git config --local gc.auto 0
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2146269Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2146909Z ##[group]Setting up auth
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2147583Z Removing SSH command configuration
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2148268Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2150341Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2427665Z Removing HTTP extra header
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2428615Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2468131Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2663760Z Removing includeIf entries pointing to credentials config files
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2682906Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2710435Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2907011Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2941364Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path /home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.2978687Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.3023239Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.3054830Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.3092068Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.3092986Z ##[group]Fetching the repository
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.3096350Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +362cf5db70466d8f219191e522b0c0886c405d5d:refs/remotes/origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5774482Z From https://github.com/ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5775818Z  * [new ref]         362cf5db70466d8f219191e522b0c0886c405d5d -> origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5777976Z [command]/usr/bin/git branch --list --remote origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5778779Z   origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5780332Z [command]/usr/bin/git rev-parse refs/remotes/origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5803286Z 362cf5db70466d8f219191e522b0c0886c405d5d
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5806426Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5807188Z ##[group]Determining the checkout info
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5807972Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5809119Z [command]/usr/bin/git sparse-checkout disable
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5863314Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5901211Z ##[group]Checking out the ref
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5904833Z [command]/usr/bin/git checkout --progress --force -B case/012-install-failure refs/remotes/origin/case/012-install-failure
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5963238Z Switched to a new branch 'case/012-install-failure'
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5967906Z branch 'case/012-install-failure' set up to track 'origin/case/012-install-failure'.
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.5973112Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.6014819Z [command]/usr/bin/git log -1 --format=%H
+pytest	Run actions/checkout@v7	2026-11-16T07:48:02.6048585Z 362cf5db70466d8f219191e522b0c0886c405d5d
+pytest	Run actions/setup-python@v7	﻿2026-11-16T07:48:02.6295272Z ##[group]Run actions/setup-python@v7
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6295614Z with:
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6295855Z   python-version: 3.12
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6296119Z   check-latest: false
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6298382Z   token: ***
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6298724Z   mirror: https://raw.githubusercontent.com/actions/python-versions/main
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6299156Z   update-environment: true
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6353533Z   allow-prereleases: false
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6354048Z   freethreaded: false
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.6354508Z ##[endgroup]
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.7106594Z ##[group]Installed versions
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.7158418Z Successfully set up CPython (3.12.16)
+pytest	Run actions/setup-python@v7	2026-11-16T07:48:02.7159682Z ##[endgroup]
+pytest	Record checkout and environment	﻿2026-11-16T07:48:02.7344967Z ##[group]Run mkdir -p reports
+pytest	Record checkout and environment	2026-11-16T07:48:02.7345553Z ^[[36;1mmkdir -p reports^[[0m
+pytest	Record checkout and environment	2026-11-16T07:48:02.7346124Z ^[[36;1mgit rev-parse HEAD | tee reports/checkout_sha.txt^[[0m
+pytest	Record checkout and environment	2026-11-16T07:48:02.7346835Z ^[[36;1mpython --version | tee reports/python_version.txt^[[0m
+pytest	Record checkout and environment	2026-11-16T07:48:02.7393107Z shell: /usr/bin/bash -e {0}
+pytest	Record checkout and environment	2026-11-16T07:48:02.7393603Z env:
+pytest	Record checkout and environment	2026-11-16T07:48:02.7394081Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-16T07:48:02.7394956Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Record checkout and environment	2026-11-16T07:48:02.7395958Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-16T07:48:02.7396830Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-16T07:48:02.7397551Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-16T07:48:02.7398246Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Record checkout and environment	2026-11-16T07:48:02.7398837Z ##[endgroup]
+pytest	Record checkout and environment	2026-11-16T07:48:02.7534743Z 362cf5db70466d8f219191e522b0c0886c405d5d
+pytest	Record checkout and environment	2026-11-16T07:48:02.7636002Z Python 3.12.16
+pytest	Download shared test data	﻿2026-11-16T07:48:02.7676525Z ##[group]Run gh release download test-data --pattern prices.csv --dir tests/data --clobber
+pytest	Download shared test data	2026-11-16T07:48:02.7677376Z ^[[36;1mgh release download test-data --pattern prices.csv --dir tests/data --clobber^[[0m
+pytest	Download shared test data	2026-11-16T07:48:02.7694791Z shell: /usr/bin/bash -e {0}
+pytest	Download shared test data	2026-11-16T07:48:02.7695077Z env:
+pytest	Download shared test data	2026-11-16T07:48:02.7695369Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-16T07:48:02.7695828Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Download shared test data	2026-11-16T07:48:02.7696281Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-16T07:48:02.7696694Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-16T07:48:02.7697237Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-16T07:48:02.7697651Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Download shared test data	2026-11-16T07:48:02.7699984Z   GH_TOKEN: ***
+pytest	Download shared test data	2026-11-16T07:48:02.7700222Z ##[endgroup]
+pytest	Install	﻿2026-11-16T07:48:03.4041479Z ##[group]Run pip install -e ".[test]"
+pytest	Install	2026-11-16T07:48:03.4042742Z ^[[36;1mpip install -e ".[test]"^[[0m
+pytest	Install	2026-11-16T07:48:03.4060218Z shell: /usr/bin/bash -e {0}
+pytest	Install	2026-11-16T07:48:03.4060980Z env:
+pytest	Install	2026-11-16T07:48:03.4061914Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-16T07:48:03.4063216Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Install	2026-11-16T07:48:03.4064526Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-16T07:48:03.4065695Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-16T07:48:03.4066864Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-16T07:48:03.4068010Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Install	2026-11-16T07:48:03.4068976Z ##[endgroup]
+pytest	Install	2026-11-16T07:48:04.0672999Z Obtaining file:///home/runner/work/ci-failure-target/ci-failure-target
+pytest	Install	2026-11-16T07:48:04.0683712Z   Installing build dependencies: started
+pytest	Install	2026-11-16T07:48:04.7113934Z   Installing build dependencies: finished with status 'done'
+pytest	Install	2026-11-16T07:48:04.7124249Z   Checking if build backend supports build_editable: started
+pytest	Install	2026-11-16T07:48:04.9910685Z   Checking if build backend supports build_editable: finished with status 'done'
+pytest	Install	2026-11-16T07:48:04.9915843Z   Getting requirements to build editable: started
+pytest	Install	2026-11-16T07:48:05.1978496Z   Getting requirements to build editable: finished with status 'done'
+pytest	Install	2026-11-16T07:48:05.1980713Z   Preparing editable metadata (pyproject.toml): started
+pytest	Install	2026-11-16T07:48:05.3438928Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+pytest	Install	2026-11-16T07:48:05.4667233Z ERROR: Ignored the following yanked versions: 8.1.0
+pytest	Install	2026-11-16T07:48:05.4667907Z INFO: pip is looking at multiple versions of shopcalc[test] to determine which version is compatible with other requirements. This could take a while.
+pytest	Install	2026-11-16T07:48:05.4715758Z ERROR: Could not find a version that satisfies the requirement pytest>=99 (from shopcalc[test]) (from versions: 2.0.0, 2.0.1, 2.0.2, 2.0.3, 2.1.0, 2.1.1, 2.1.2, 2.1.3, 2.2.0, 2.2.1, 2.2.2, 2.2.3, 2.2.4, 2.3.0, 2.3.1, 2.3.2, 2.3.3, 2.3.4, 2.3.5, 2.4.0, 2.4.1, 2.4.2, 2.5.0, 2.5.1, 2.5.2, 2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.7.0, 2.7.1, 2.7.2, 2.7.3, 2.8.0, 2.8.1, 2.8.2, 2.8.3, 2.8.4, 2.8.5, 2.8.6, 2.8.7, 2.9.0, 2.9.1, 2.9.2, 3.0.0, 3.0.1, 3.0.2, 3.0.3, 3.0.4, 3.0.5, 3.0.6, 3.0.7, 3.1.0, 3.1.1, 3.1.2, 3.1.3, 3.2.0, 3.2.1, 3.2.2, 3.2.3, 3.2.4, 3.2.5, 3.3.0, 3.3.1, 3.3.2, 3.4.0, 3.4.1, 3.4.2, 3.5.0, 3.5.1, 3.6.0, 3.6.1, 3.6.2, 3.6.3, 3.6.4, 3.7.0, 3.7.1, 3.7.2, 3.7.3, 3.7.4, 3.8.0, 3.8.1, 3.8.2, 3.9.1, 3.9.2, 3.9.3, 3.10.0, 3.10.1, 4.0.0, 4.0.1, 4.0.2, 4.1.0, 4.1.1, 4.2.0, 4.2.1, 4.3.0, 4.3.1, 4.4.0, 4.4.1, 4.4.2, 4.5.0, 4.6.0, 4.6.1, 4.6.2, 4.6.3, 4.6.4, 4.6.5, 4.6.6, 4.6.7, 4.6.8, 4.6.9, 4.6.10, 4.6.11, 5.0.0, 5.0.1, 5.1.0, 5.1.1, 5.1.2, 5.1.3, 5.2.0, 5.2.1, 5.2.2, 5.2.3, 5.2.4, 5.3.0, 5.3.1, 5.3.2, 5.3.3, 5.3.4, 5.3.5, 5.4.0, 5.4.1, 5.4.2, 5.4.3, 6.0.0rc1, 6.0.0, 6.0.1, 6.0.2, 6.1.0, 6.1.1, 6.1.2, 6.2.0, 6.2.1, 6.2.2, 6.2.3, 6.2.4, 6.2.5, 7.0.0rc1, 7.0.0, 7.0.1, 7.1.0, 7.1.1, 7.1.2, 7.1.3, 7.2.0, 7.2.1, 7.2.2, 7.3.0, 7.3.1, 7.3.2, 7.4.0, 7.4.1, 7.4.2, 7.4.3, 7.4.4, 8.0.0rc1, 8.0.0rc2, 8.0.0, 8.0.1, 8.0.2, 8.1.1, 8.1.2, 8.2.0, 8.2.1, 8.2.2, 8.3.0, 8.3.1, 8.3.2, 8.3.3, 8.3.4, 8.3.5, 8.4.0, 8.4.1, 8.4.2, 9.0.0, 9.0.1, 9.0.2, 9.0.3, 9.1.0, 9.1.1, 9.2.0)
+pytest	Install	2026-11-16T07:48:05.4719010Z ERROR: No matching distribution found for pytest>=99 (from shopcalc[test])
+pytest	Install	2026-11-16T07:48:05.5156280Z ##[error]Process completed with exit code 1.
+pytest	Upload reports	﻿2026-11-16T07:48:05.5230204Z ##[group]Run actions/upload-artifact@v7
+pytest	Upload reports	2026-11-16T07:48:05.5230370Z with:
+pytest	Upload reports	2026-11-16T07:48:05.5230480Z   name: pytest-reports
+pytest	Upload reports	2026-11-16T07:48:05.5230601Z   path: reports/
+pytest	Upload reports	2026-11-16T07:48:05.5230724Z   if-no-files-found: warn
+pytest	Upload reports	2026-11-16T07:48:05.5231025Z   compression-level: 6
+pytest	Upload reports	2026-11-16T07:48:05.5231139Z   overwrite: false
+pytest	Upload reports	2026-11-16T07:48:05.5231256Z   include-hidden-files: false
+pytest	Upload reports	2026-11-16T07:48:05.5231382Z   archive: true
+pytest	Upload reports	2026-11-16T07:48:05.5231485Z env:
+pytest	Upload reports	2026-11-16T07:48:05.5231620Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-16T07:48:05.5232021Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Upload reports	2026-11-16T07:48:05.5232241Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-16T07:48:05.5232451Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-16T07:48:05.5232648Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-16T07:48:05.5232847Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Upload reports	2026-11-16T07:48:05.5233033Z ##[endgroup]
+pytest	Upload reports	2026-11-16T07:48:05.6270046Z With the provided path, there will be 2 files uploaded
+pytest	Upload reports	2026-11-16T07:48:05.6273022Z Artifact name is valid!
+pytest	Upload reports	2026-11-16T07:48:05.6288223Z Root directory input is valid!
+pytest	Upload reports	2026-11-16T07:48:05.8939013Z Uploading artifact: pytest-reports.zip
+pytest	Upload reports	2026-11-16T07:48:05.8963889Z Beginning upload of artifact content to blob storage
+pytest	Upload reports	2026-11-16T07:48:06.0698878Z Uploaded bytes 332
+pytest	Upload reports	2026-11-16T07:48:06.1118794Z Finished uploading artifact content to blob storage!
+pytest	Upload reports	2026-11-16T07:48:06.1119488Z SHA256 digest of uploaded artifact is 2e1a9de57c7c738e04ec1fac9f2b567f8ddb70d3ec2a83c114c7575111abab49
+pytest	Upload reports	2026-11-16T07:48:06.1121027Z Finalizing artifact upload
+pytest	Upload reports	2026-11-16T07:48:06.5318523Z Artifact pytest-reports successfully finalized. Artifact ID 14205689363
+pytest	Upload reports	2026-11-16T07:48:06.5319279Z Artifact pytest-reports has been successfully uploaded! Final size is 332 bytes. Artifact ID is 14205689363
+pytest	Upload reports	2026-11-16T07:48:06.5321291Z Artifact download URL: https://github.com/ksm031116-creator/ci-failure-target/actions/runs/43826334632/artifacts/14205689363
+pytest	Post Run actions/checkout@v7	﻿2026-11-16T07:48:06.5468612Z Post job cleanup.
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6102476Z [command]/usr/bin/git version
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6167893Z git version 2.56.1
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6203510Z Temporarily overriding HOME='/home/runner/work/_temp/86f08b9c-dd48-42ca-aa98-70128241c629' before making global git config changes
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6204434Z Adding repository directory to the temporary git global config as a safe directory
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6214875Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6277227Z Removing SSH command configuration
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6277805Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6323094Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6722252Z Removing HTTP extra header
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6742439Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6767510Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6951164Z Removing includeIf entries pointing to credentials config files
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6955722Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6991248Z includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.6992142Z includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7007087Z includeif.gitdir:/github/workspace/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7012262Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7013630Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7026755Z /home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7035097Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-8069bcd4\-a27f\-435a\-b19b\-2486ba94419a\.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7078036Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7113892Z /home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7119857Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-8069bcd4\-a27f\-435a\-b19b\-2486ba94419a\.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7158356Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7203728Z /github/runner_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7229283Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-8069bcd4\-a27f\-435a\-b19b\-2486ba94419a\.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7254007Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7292597Z /github/runner_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7308380Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-8069bcd4\-a27f\-435a\-b19b\-2486ba94419a\.config
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7363444Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pytest	Post Run actions/checkout@v7	2026-11-16T07:48:06.7717866Z Removing credentials config '/home/runner/work/_temp/git-credentials-8069bcd4-a27f-435a-b19b-2486ba94419a.config'
+pytest	Complete job	﻿2026-11-16T07:48:06.7877403Z Cleaning up orphan processes

@@ -1,0 +1,25 @@
+{
+  "case_id": "case-009",
+  "root_cause": {
+    "file": "src/shopcalc/orders.py",
+    "line": 47,
+    "summary": "주문 수량 상한 검사가 총 수량이 아닌 품목 종류 수(`len(items)`)를 세어 51개 주문이 통과한다."
+  },
+  "fault_commit_message": "perf: 주문 수량 검사 단순화",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "place_order의 상한 검사가 `len(items)`를 사용함"
+  ],
+  "required_evidence": [
+    "로그에서 기대한 ValueError 대신 inventory.reserve의 OutOfStockError가 발생",
+    "orders.py의 `if len(items) > config.max_items_per_order:`"
+  ],
+  "incorrect_conclusions": [
+    "Inventory.reserve의 가용 수량 계산 오류",
+    "inventory fixture의 MILK 재고 부족",
+    "max_items_per_order 설정 변경"
+  ],
+  "fix_summary": "`sum(items.values())`로 되돌린다."
+}

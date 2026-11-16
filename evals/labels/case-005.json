@@ -1,0 +1,25 @@
+{
+  "case_id": "case-005",
+  "root_cause": {
+    "file": "src/shopcalc/loader.py",
+    "line": 20,
+    "summary": "CSV 컬럼 이름을 `taxable`이 아닌 `taxble`로 읽어 모든 행에서 KeyError가 난다."
+  },
+  "fault_commit_message": "refactor: 로더 컬럼 처리 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "load_catalog_csv의 컬럼 이름 오타(`taxble`)"
+  ],
+  "required_evidence": [
+    "로그 traceback의 loader.py `row[\"taxble\"]` 줄",
+    "`KeyError: 'taxble'`"
+  ],
+  "incorrect_conclusions": [
+    "CSV 데이터에 taxable 컬럼이 없음",
+    "테스트 3개가 각각 다른 원인으로 실패"
+  ],
+  "fix_summary": "`row[\"taxable\"]`로 되돌린다.",
+  "notes": "한 원인으로 테스트 3개가 실패한다(2개는 직접 호출, 1개는 fixture 설정 오류)."
+}

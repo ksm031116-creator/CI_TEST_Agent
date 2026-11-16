@@ -1,0 +1,26 @@
+{
+  "case_id": "case-010",
+  "root_cause": {
+    "file": "src/shopcalc/catalog.py",
+    "line": 12,
+    "summary": "Product.taxable 기본값이 True에서 False로 바뀌어 명시하지 않은 상품이 모두 면세가 된다."
+  },
+  "fault_commit_message": "chore: 상품 기본 속성 조정",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "Product 데이터클래스의 taxable 기본값 변경"
+  ],
+  "required_evidence": [
+    "로그의 세금 0 관련 실패 2건(test_order_totals, test_tax_for_taxable_product)",
+    "catalog.py의 `taxable: bool = False`",
+    "conftest.py fixture가 APPLE·BREAD에 taxable을 명시하지 않음"
+  ],
+  "incorrect_conclusions": [
+    "pricing.line_tax 계산 오류",
+    "config.tax_rate가 0으로 변경",
+    "두 실패가 서로 다른 원인"
+  ],
+  "fix_summary": "기본값을 True로 되돌린다."
+}
