@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites name="pytest tests">
+  <testsuite name="pytest" errors="1" failures="1" skipped="1" tests="5" time="0.05">
+    <testcase classname="tests.test_pricing" name="test_ok" time="0.001" />
+    <testcase classname="tests.test_pricing" name="test_bulk" time="0.001">
+      <failure message="AssertionError: assert 10000 == 9500">def test_bulk():
+&gt;       assert subtotal == 9500
+E       AssertionError: assert 10000 == 9500
+
+tests/test_pricing.py:18: AssertionError</failure>
+    </testcase>
+    <testcase classname="tests.test_orders.TestPlace" name="test_setup_breaks" time="0.000">
+      <error message="failed on setup with &quot;KeyError: 'APPLE'&quot;">KeyError: 'APPLE'</error>
+    </testcase>
+    <testcase classname="tests.test_data" name="test_needs_file" time="0.000">
+      <skipped type="pytest.skip" message="data not downloaded">tests/test_data.py:20: data not downloaded</skipped>
+    </testcase>
+    <testcase classname="tests.test_orders.TestPlace" name="test_fail_then_teardown_error" time="0.001">
+      <failure message="assert 1 == 2">assert 1 == 2</failure>
+      <error message="failed on teardown">RuntimeError</error>
+    </testcase>
+  </testsuite>
+</testsuites>
