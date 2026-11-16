@@ -90,7 +90,19 @@ Thumbs.db
 - `main`은 항상 테스트가 통과하는 상태로 유지한다. `main`에 직접 커밋하지 않는다. 단, 0단계 초기 설정 커밋은 예외로 한다.
 - 혼자 개발해도 PR로 병합한다. 이 서비스의 CI가 생긴 뒤에는 CI 통과를 병합 조건으로 설정한다.
 - 병합은 squash merge만 사용하고, PR 제목을 커밋 규칙에 맞춘다. PR 제목이 `main`의 커밋 제목이 된다. 병합한 브랜치는 GitHub에서 자동 삭제된다.
-- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash`. 병합 후 로컬에서는 `git switch main`, `git pull --ff-only`, `git fetch --prune`으로 정리한다.
+- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash`.
+
+병합 후 로컬은 다음 순서로 정리한다.
+
+```bash
+git switch main
+git pull --ff-only
+git fetch --prune
+git diff --quiet main <branch> && git branch -D <branch>
+```
+
+- squash merge는 브랜치 커밋을 새 커밋 하나로 합치므로, `git branch -d`는 브랜치가 병합되지 않았다고 판단해 삭제를 거부한다.
+- 그래서 `git diff --quiet`로 브랜치 내용이 `main`과 같은지 먼저 확인하고, 같을 때만 `git branch -D`로 삭제한다. 차이가 있으면 삭제하지 않고 남은 변경을 확인한다.
 
 **`main`은 GitHub 브랜치 보호 규칙으로 강제한다.**
 
