@@ -1,0 +1,26 @@
+{
+  "case_id": "case-003",
+  "root_cause": {
+    "file": "src/shopcalc/inventory.py",
+    "line": 32,
+    "summary": "Inventory.release가 예약 수량을 빼지 않고 더해, 주문 실패 시 롤백이 예약을 늘린다."
+  },
+  "fault_commit_message": "refactor: 재고 예약 수량 계산 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "Inventory.release의 부호 오류(`+ quantity`)"
+  ],
+  "required_evidence": [
+    "로그의 `assert 1 == 5` (available이 5가 아니라 1)",
+    "orders.place_order의 except 블록이 inventory.release를 호출함",
+    "inventory.py release의 `self.reserved(sku) + quantity`"
+  ],
+  "incorrect_conclusions": [
+    "place_order의 롤백 누락",
+    "Inventory.reserve의 가용 수량 계산 오류",
+    "테스트 픽스처 재고 수량 문제"
+  ],
+  "fix_summary": "release에서 `- quantity`로 되돌린다."
+}

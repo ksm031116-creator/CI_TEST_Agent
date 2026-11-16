@@ -1,0 +1,21 @@
+{
+  "case_id": "case-004",
+  "case_type": "insufficient_evidence",
+  "origin": "synthetic",
+  "input_id": "gha-43824496310-a1-j133154955578",
+  "input_bundle_sha256": "87ff2082320757fd259f5e0c82c4c22fa2bcf7f5891a4ed95b00b282e7d08f29",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 43824496310,
+  "run_attempt": 1,
+  "job_id": 133154955578,
+  "checkout_sha": "08285d27803907b7c61ca539cc8f84d3647821fc",
+  "failing_tests": [
+    "tests/test_catalog_data.py::test_reference_order_total"
+  ],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}
