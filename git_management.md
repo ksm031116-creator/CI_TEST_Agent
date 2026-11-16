@@ -90,7 +90,7 @@ Thumbs.db
 - `main`은 항상 테스트가 통과하는 상태로 유지한다. `main`에 직접 커밋하지 않는다. 단, 0단계 초기 설정 커밋은 예외로 한다.
 - 혼자 개발해도 PR로 병합한다. 이 서비스의 CI가 생긴 뒤에는 CI 통과를 병합 조건으로 설정한다.
 - 병합은 squash merge만 사용하고, PR 제목을 커밋 규칙에 맞춘다. PR 제목이 `main`의 커밋 제목이 된다. 병합한 브랜치는 GitHub에서 자동 삭제된다.
-- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash`.
+- PR 생성·병합은 GitHub CLI로 한다. 예: `gh pr create --fill`, `gh pr merge --squash`. 필수 검사가 끝난 뒤 병합하도록 `gh pr checks --watch`로 기다린다.
 
 병합 후 로컬은 다음 순서로 정리한다.
 
@@ -115,7 +115,7 @@ git diff --quiet main <branch> && git branch -D <branch>
 | 선형 이력 | 켬 | squash merge 기본 규칙과 맞춘다 |
 | 강제 푸시·브랜치 삭제 | 금지 | 공개된 이력을 다시 쓰지 않는다 |
 | 대화 해결 필수 | 켬 | 해결하지 않은 리뷰 코멘트가 있으면 병합하지 않는다 |
-| 필수 CI 검사 | 미설정 | `.github/workflows/`를 추가하는 단계에서 해당 작업 이름을 필수 검사로 등록한다 |
+| 필수 CI 검사 | `pytest` 작업 통과 (2026-11-18 등록) | `.github/workflows/tests.yml`의 `uv run pytest`가 통과해야 병합된다. 최신 `main` 반영(strict)은 요구하지 않는다 |
 
 저장소 병합 설정도 같은 날 다음과 같이 맞췄다.
 
