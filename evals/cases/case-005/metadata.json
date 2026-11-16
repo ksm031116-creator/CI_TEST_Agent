@@ -1,0 +1,23 @@
+{
+  "case_id": "case-005",
+  "case_type": "log_clear",
+  "origin": "synthetic",
+  "input_id": "gha-43826333698-a2-j133163462257",
+  "input_bundle_sha256": "b4923924f7acf8cd751b17a1fa5f7d801a253c064ae3a1867f6bbc3b557ed893",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 43826333698,
+  "run_attempt": 2,
+  "job_id": 133163462257,
+  "checkout_sha": "c6b9acf6f6bea2bfbe7104a0459b188a7680fca0",
+  "failing_tests": [
+    "tests/test_catalog_data.py::test_reference_order_total",
+    "tests/test_loader.py::test_loads_products_with_prices",
+    "tests/test_loader.py::test_taxable_flag_is_parsed"
+  ],
+  "expected_log_only_solvable": true,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

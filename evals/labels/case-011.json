@@ -1,0 +1,26 @@
+{
+  "case_id": "case-011",
+  "root_cause": {
+    "file": null,
+    "line": null,
+    "summary": "CI가 내려받는 `test-data` 릴리스의 prices.csv에서 B200 행이 삭제되었다. 코드 변경은 오류 메시지 형식뿐이다. 데이터 파일은 분석 입력에 없다."
+  },
+  "fault_commit_message": "refactor: 카탈로그 조회 오류 메시지 개선 (무관한 변경)",
+  "acceptable_conclusions": [
+    "insufficient_evidence",
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "내려받은 prices.csv에 B200이 없을 가능성. 확인 방법으로 데이터 파일 확인을 제시해야 함"
+  ],
+  "required_evidence": [
+    "로그의 `KeyError: \"unknown sku: 'B200'\"`와 `Download shared test data` 단계",
+    "catalog.get 변경이 메시지 형식만 바꾼다는 점"
+  ],
+  "incorrect_conclusions": [
+    "catalog.get 변경이 조회를 깨뜨렸다고 단정",
+    "loader가 행을 누락한다고 단정"
+  ],
+  "fix_summary": "릴리스의 prices.csv에 B200 행을 복구했다(수집 직후 복구 완료).",
+  "notes": "case-004와 같은 계열(외부 데이터 변경)이므로 두 사례는 같은 분할에 둔다."
+}

@@ -43,6 +43,8 @@
 
 **현재 수집 방식과 남은 작업**
 
-- D1에서는 위 명령을 수동으로 실행해 4개 묶음을 수집했다. 같은 형식으로 묶음을 만드는 수집기를 F01에서 `src/`에 구현한다.
+- 수집기는 `src/ci_failure_analyzer/inputs/collector.py`, 진입 스크립트는 `scripts/collect_run.py`다. D1에 수동으로 수집한 4개 묶음을 수집기로 다시 수집해 묶음 해시가 같음을 확인했다.
+- 수집기는 실행당 작업이 하나인 경우만 지원하고, 코드 스냅샷을 만들려면 분석 대상 저장소의 로컬 클론이 필요하다.
+- 이미 저장한 묶음은 덮어쓰지 않는다. CI 재실행은 `run_attempt`가 달라 별도 묶음이 된다.
 - 분석 대상 저장소의 워크플로는 [`ci-failure-target`](https://github.com/ksm031116-creator/ci-failure-target)의 `.github/workflows/tests.yml`이다. 이 저장소는 비공개다.
 - 로그 길이 제한, 여러 작업이 실패한 실행의 처리, 로그 내 민감정보 마스킹 규칙은 F01 구현 때 확정한다.

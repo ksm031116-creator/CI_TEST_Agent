@@ -1,0 +1,21 @@
+{
+  "case_id": "case-006",
+  "case_type": "log_clear",
+  "origin": "synthetic",
+  "input_id": "gha-43826333807-a2-j133163476992",
+  "input_bundle_sha256": "d0bea8cd5a3bb1bfacd0a7fb4a71eadb32acc3dcfd6b2bd704196b1496327a00",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 43826333807,
+  "run_attempt": 2,
+  "job_id": 133163476992,
+  "checkout_sha": "87b34d85cf527fb35a27526bfae8d1649f5a2d26",
+  "failing_tests": [
+    "tests/test_inventory.py::test_commit_removes_from_on_hand"
+  ],
+  "expected_log_only_solvable": true,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

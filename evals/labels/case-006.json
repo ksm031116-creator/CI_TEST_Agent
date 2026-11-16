@@ -1,0 +1,23 @@
+{
+  "case_id": "case-006",
+  "root_cause": {
+    "file": "src/shopcalc/inventory.py",
+    "line": 39,
+    "summary": "Inventory.commit이 존재하지 않는 속성 `_onhand`에 값을 쓴다."
+  },
+  "fault_commit_message": "refactor: 출고 처리 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "Inventory.commit의 속성 이름 오타(`_onhand`, 올바른 이름은 `_on_hand`)"
+  ],
+  "required_evidence": [
+    "로그 traceback의 inventory.py commit 줄",
+    "`AttributeError` 메시지의 `_onhand`"
+  ],
+  "incorrect_conclusions": [
+    "Inventory.__init__에서 속성 초기화 누락"
+  ],
+  "fix_summary": "`self._on_hand[sku]`로 되돌린다."
+}
