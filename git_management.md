@@ -171,7 +171,9 @@ eval(splits): case-014를 holdout에서 dev로 이동
 **비밀정보는 커밋 전에 차단한다.**
 
 - 인증키·토큰은 `.env`에만 두고, 설정 이름은 값이 없는 `.env.example`로 안내한다.
-- pre-commit 훅에서 비밀정보 검사 도구(예: gitleaks)를 실행한다. GitHub 저장소에서는 secret scanning과 push protection을 켠다.
+- pre-commit 훅에서 비밀정보 검사 도구(예: gitleaks)를 실행한다.
+- GitHub 저장소 보안 설정은 2026-11-16에 다음과 같이 켰다: secret scanning, push protection, Dependabot 취약점 알림, Dependabot 보안 업데이트.
+- Dependabot 보안 업데이트는 의존성 파일(`pyproject.toml` 등)이 생긴 뒤부터 동작한다. Dependabot이 만든 PR도 일반 PR과 같이 테스트 통과를 확인한 뒤 squash merge한다.
 - CI 로그·실행 환경에서 가져온 자료를 추적 위치로 옮길 때는 [폴더 관리 계획](./folder_management.md)의 민감정보 확인 절차를 먼저 거친다.
 - 비밀정보를 커밋했다면 이력 삭제보다 먼저 해당 키를 폐기·재발급한다.
 
