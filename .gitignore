@@ -1,0 +1,32 @@
+# 원본 입력·실행 기록·로컬 서비스 데이터·임시 작업
+work/
+
+# 비밀정보: 값 없는 예시 파일만 추적
+.env
+.env.*
+!.env.example
+
+# Python 환경·캐시·빌드 결과
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# 로컬 DB·대용량 파일
+*.db
+*.sqlite3
+*.mp4
+*.zip
+
+# 편집기·OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
