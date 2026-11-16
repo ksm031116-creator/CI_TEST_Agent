@@ -1,0 +1,24 @@
+{
+  "case_id": "case-001",
+  "root_cause": {
+    "file": "src/shopcalc/catalog.py",
+    "line": 24,
+    "summary": "가격 검증 조건이 `< 0`에서 `<= 0`으로 바뀌어 가격 0인 상품까지 거부한다."
+  },
+  "fault_commit_message": "fix: 상품 가격 검증 강화",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "Catalog.add의 가격 검증이 0원 상품을 음수로 취급해 거부함"
+  ],
+  "required_evidence": [
+    "로그 traceback의 catalog.py `if product.unit_price <= 0:` 줄",
+    "오류 메시지 `negative price for SAMPLE`과 테스트의 가격 0 입력"
+  ],
+  "incorrect_conclusions": [
+    "테스트가 잘못됨(0원 상품 허용이 요구사항)",
+    "근거 부족"
+  ],
+  "fix_summary": "조건을 `product.unit_price < 0`으로 되돌린다."
+}

@@ -11,6 +11,9 @@ repos:
       - id: check-added-large-files
         args: ["--maxkb=1024"]
       - id: check-merge-conflict
+      # Eval inputs must stay byte-identical to the collected originals.
       - id: end-of-file-fixer
+        exclude: ^evals/cases/
       - id: trailing-whitespace
         args: ["--markdown-linebreak-ext=md"]
+        exclude: ^evals/cases/

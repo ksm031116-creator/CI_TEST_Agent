@@ -1,0 +1,26 @@
+{
+  "case_id": "case-004",
+  "root_cause": {
+    "file": null,
+    "line": null,
+    "summary": "CI가 내려받는 `test-data` 릴리스의 prices.csv에서 B200 가격이 3500에서 3800으로 바뀌었다. 코드 변경(세금 계산 리팩터링)은 동작을 바꾸지 않는다. 데이터 파일은 분석 입력에 포함되지 않는다."
+  },
+  "fault_commit_message": "refactor: 세금 계산 분기 단순화 (무관한 변경)",
+  "acceptable_conclusions": [
+    "insufficient_evidence",
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "외부에서 내려받은 테스트 데이터(prices.csv) 변경 가능성. 확인 방법으로 데이터 파일 비교를 제시해야 함"
+  ],
+  "required_evidence": [
+    "로그의 `Download shared test data` 단계와 `assert Decimal('12320') == Decimal('11660')`",
+    "pricing.line_tax 리팩터링이 과세·면세 결과를 바꾸지 않는다는 점"
+  ],
+  "incorrect_conclusions": [
+    "pricing.line_tax 리팩터링이 원인이라고 단정",
+    "세율 설정 변경"
+  ],
+  "fix_summary": "릴리스의 prices.csv를 원래 가격으로 복구했다(수집 직후 복구 완료).",
+  "notes": "사례 수집 중에만 데이터를 바꿨다. 이후 main 실행(workflow_dispatch)이 통과해 복구를 확인했다."
+}

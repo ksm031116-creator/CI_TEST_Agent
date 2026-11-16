@@ -1,0 +1,21 @@
+{
+  "case_id": "case-003",
+  "case_type": "distant_cause",
+  "origin": "synthetic",
+  "input_id": "gha-43824414322-a1-j133154690252",
+  "input_bundle_sha256": "22cbe7321e8a80b643f4cb3294190f719613a3ef30394d1c61d1748e4354ed62",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 43824414322,
+  "run_attempt": 1,
+  "job_id": 133154690252,
+  "checkout_sha": "0a54fc68b1c5845b0639fe4a9e4b2bbd43aeea1b",
+  "failing_tests": [
+    "tests/test_orders.py::test_failed_order_releases_reservations"
+  ],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}
