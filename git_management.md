@@ -136,6 +136,18 @@ eval(splits): case-014를 holdout에서 dev로 이동
 - CI 로그·실행 환경에서 가져온 자료를 추적 위치로 옮길 때는 [폴더 관리 계획](./folder_management.md)의 민감정보 확인 절차를 먼저 거친다.
 - 비밀정보를 커밋했다면 이력 삭제보다 먼저 해당 키를 폐기·재발급한다.
 
+pre-commit 훅은 `.pre-commit-config.yaml`에서 관리한다. gitleaks 비밀정보 검사, 1MB 초과 파일 차단, 병합 충돌 표시 검사, 파일 끝·줄 끝 공백 정리를 실행한다. 저장소를 새로 받은 환경에서는 다음 명령으로 훅을 설치한다.
+
+```bash
+python -m pip install --user pre-commit
+python -m pre_commit install
+python -m pre_commit run --all-files
+```
+
+- 훅 버전은 `python -m pre_commit autoupdate`로 갱신하고, 갱신은 `chore` 커밋으로 분리한다.
+- `.pre-commit-config.yaml`에는 한글 등 ASCII 밖의 문자를 쓰지 않는다. Windows 기본 인코딩(cp949)에서 pre-commit이 설정 파일을 읽지 못한다.
+- `--no-verify`로 훅을 건너뛰지 않는다. 오탐이면 해당 줄에 `gitleaks:allow` 주석을 달거나 `.gitleaksignore`에 지문을 등록하고 이유를 커밋 메시지에 적는다.
+
 **평가 정답이 분석 입력으로 새지 않게 한다.**
 
 - 에이전트의 조회 도구는 분석 대상 저장소의 지정 커밋으로 범위를 고정한다. 수정 커밋과 이후 이력은 조회할 수 없어야 하며, 이 제한은 테스트로 검증한다.
