@@ -1,0 +1,25 @@
+# Settings shared by every analysis method. Changing the model invalidates
+# comparison with earlier results; see docs/analysis_methods.md.
+model = "claude-opus-5-5"
+max_output_tokens = 8000
+
+[budget]
+# Hard limit on total API spending for this project, in US dollars.
+# Set by the project owner on 2026-11-19. Enforced by analysis/budget.py.
+total_limit_usd = 100
+
+[pricing]
+# Anthropic API list prices, US dollars per million tokens.
+date = "2026-11-03"
+
+[pricing.models.claude-opus-5-5]
+input_per_mtok = 4.00
+output_per_mtok = 20.00
+
+[pricing.models.claude-sonnet-5-5]
+input_per_mtok = 2.00
+output_per_mtok = 10.00
+
+[pricing.models.claude-haiku-5-5]
+input_per_mtok = 0.10
+output_per_mtok = 0.50
