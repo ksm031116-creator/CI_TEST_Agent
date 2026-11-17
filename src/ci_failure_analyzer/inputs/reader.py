@@ -7,6 +7,7 @@ Line numbers used in analysis contexts and in report citations both come from
 from __future__ import annotations
 
 import json
+import re
 import tarfile
 from functools import cached_property
 from pathlib import Path
@@ -17,6 +18,23 @@ PYTHON_VERSION = "reports/python_version.txt"
 
 # Files larger than this are listed but not readable as text.
 MAX_CODE_FILE_BYTES = 1_000_000
+
+
+_TIMESTAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T[\d:.]+Z ?")
+# Colour codes arrive either as a real ESC byte or, from `gh`, spelled as `^[`.
+_ANSI = re.compile(r"(?:\x1b|\^\[)\[[0-9;]*m")
+
+
+def clean_log_line(raw: str) -> tuple[str, str]:
+    """Split a `gh run view --log` line into (step name, content).
+
+    The job and step columns, the BOM, the timestamp and ANSI colour codes are
+    removed. One raw line always gives one cleaned line, so numbering is unchanged.
+    """
+    parts = raw.split("\t", 2)
+    step, content = (parts[1], parts[2]) if len(parts) == 3 else ("", raw)
+    content = _TIMESTAMP.sub("", content.lstrip("\ufeff"))
+    return step, _ANSI.sub("", content)
 
 
 def split_lines(text: str) -> list[str]:
@@ -62,12 +80,27 @@ class BundleReader:
     def code_paths(self) -> tuple[str, ...]:
         return tuple(sorted(self._code))
 
+    @cached_property
+    def _log(self) -> list[tuple[str, str]] | None:
+        path = self.bundle_dir / JOB_LOG
+        if not path.exists():
+            return None
+        return [clean_log_line(line) for line in split_lines(path.read_text(encoding="utf-8", errors="replace"))]
+
+    @cached_property
+    def log_steps(self) -> list[str]:
+        """Step name of every log line, in the same order as `lines("job.log")`."""
+        return [step for step, _ in self._log or []]
+
     def lines(self, path: str) -> list[str] | None:
         """Lines of `job.log`, `reports/junit.xml` or a file in the code snapshot.
 
-        Returns None when the bundle has no such file or it is not readable text.
+        Log lines are returned cleaned (see `clean_log_line`). Returns None when
+        the bundle has no such file or it is not readable text.
         """
-        if path in (JOB_LOG, JUNIT_XML):
+        if path == JOB_LOG:
+            return None if self._log is None else [content for _, content in self._log]
+        if path == JUNIT_XML:
             file_path = self.bundle_dir / path
             if not file_path.exists():
                 return None
