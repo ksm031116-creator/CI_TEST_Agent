@@ -43,7 +43,7 @@
 **`evals/splits/<split>.json`에 사례 ID 목록을 둔다.**
 
 - `dev.json`: 개발·프롬프트 조정에 사용하는 사례
-- `holdout.json`: 최종 평가에만 사용하는 사례. 아직 만들지 않았다
+- `holdout.json`: 최종 평가에만 사용하는 사례. 2026-11-19에 10개를 고정했다
 - 같은 결함의 변형은 같은 분할에 둔다. 사례 파일은 분할별로 복제하지 않는다.
 
 **최종 평가용(holdout) 사례는 개발용과 결함이 겹치지 않게 만든다.**
@@ -77,3 +77,25 @@
 - case-002와 case-008은 로그 증상이 같고 원인이 다르다. case-004와 case-011은 같은 계열이다.
 - case-005~010은 첫 실행이 아닌 재실행(`run_attempt` 2)에서 수집했다. 첫 실행에는 사례 011용으로 바꾼 테스트 데이터가 섞여 무관한 실패가 하나 더 있었다. 첫 실행의 입력 묶음은 `work/inputs/`에 남아 있고 사례로는 쓰지 않는다.
 - case-001~004는 수동 수집, case-005~012는 수집기(`scripts/collect_run.py`)로 수집했다. 수집기로 001~004를 다시 수집해 묶음 해시가 같음을 확인했다.
+
+**최종 평가용 사례 (2026-11-19 고정)**
+
+| 사례 | 유형 | 실패 테스트 | 원인 위치 | 분할 |
+|---|---|---|---|---|
+| case-101 | `log_clear` | `test_parse_percent_coupon_with_fraction` | `coupons.py` 자료형 변환 | holdout |
+| case-102 | `log_clear` | `test_unknown_zone_rejected_for_delivery` | `shipping.py` 예외 처리 누락 | holdout |
+| case-103 | `needs_related_code` | `test_coupon_usable_on_last_day` | `coupons.py` 종료일 비교 | holdout |
+| case-104 | `needs_related_code` | `test_best_coupon_prefers_larger_discount` | `coupons.py` 정렬 방향 | holdout |
+| case-105 | `needs_related_code` | `test_discount_can_remove_free_shipping` | `checkout.py` 배송비 기준 금액 | holdout |
+| case-106 | `distant_cause` | `test_checkout_with_coupon_rows` | `coupons.py` 파싱 필드 뒤바뀜 | holdout |
+| case-107 | `distant_cause` | `test_remote_delivery_skips_weekend` | `dates.py` 영업일 계산 | holdout |
+| case-108 | `insufficient_evidence` | `test_fixed_coupon_larger_than_subtotal_is_rejected` | 요구사항 불명(테스트와 구현 불일치) | holdout |
+| case-109 | `insufficient_evidence` | `test_format_won_groups_thousands` | `formatting.py` 러너 로캘 의존 | holdout |
+| case-110 | `out_of_scope` | 없음 (테스트 모두 통과) | 워크플로 빌드 단계 | holdout |
+
+- 10개 모두 합성 사례이고, 결함은 전부 dev 사례가 건드리지 않은 모듈(쿠폰·배송·결제·날짜·표시)과 워크플로에 있다. 이 모듈들은 holdout을 만들기 직전에 분석 대상 저장소 `main`에 추가했다.
+- 정답 파일을 먼저 커밋한 뒤 실패 실행을 만들었고, 10건 모두 정답에 적은 테스트만 실패했다. 예상과 다르게 드러난 사례는 없다.
+- `insufficient_evidence` 2건은 dev의 외부 데이터 계열을 쓰지 않았다. case-108은 필요한 정보가 요구사항이고, case-109는 실행 환경(러너 로캘)이다. 두 사례 모두 테스트 데이터를 바꾸지 않았다.
+- case-110의 기대 사유 코드는 `not_test_failure`로, dev의 case-012(`no_junit`)와 다르다.
+- 한계: dev와 holdout을 같은 사람이 이틀 사이에 만들었다. 결함 종류는 나눴지만(자료형 변환, 예외 처리 누락, 경계 날짜, 정렬, 인자 뒤바뀜) 작성자의 습관이 겹칠 수 있다.
+- 이 사례들은 프롬프트와 방식 B의 파일 선택 규칙을 dev 사례로 조정하기 전에 만들었다. 최종 평가 전까지 분석 결과를 개발에 쓰지 않는다.

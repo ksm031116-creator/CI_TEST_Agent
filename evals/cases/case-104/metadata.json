@@ -1,0 +1,21 @@
+{
+  "case_id": "case-104",
+  "case_type": "needs_related_code",
+  "origin": "synthetic",
+  "input_id": "gha-44012874438-a1-j133803796042",
+  "input_bundle_sha256": "b247ec7848e1d10788b387bf09154b6ae176f5b7193f714c5b70eda995bb9459",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 44012874438,
+  "run_attempt": 1,
+  "job_id": 133803796042,
+  "checkout_sha": "e1e651daf6f344691741504b5fdd07e8c07bf5c9",
+  "failing_tests": [
+    "tests/test_coupons.py::test_best_coupon_prefers_larger_discount"
+  ],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

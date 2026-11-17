@@ -1,0 +1,19 @@
+{
+  "case_id": "case-110",
+  "case_type": "out_of_scope",
+  "origin": "synthetic",
+  "input_id": "gha-44012873971-a1-j133803794692",
+  "input_bundle_sha256": "454a0908f59de119d7f5f222000df46a63218a8863798ba2eb6a4e7c4749a792",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 44012873971,
+  "run_attempt": 1,
+  "job_id": 133803794692,
+  "checkout_sha": "fa9ca8f07e77cdb4832048ec0fb8f949e6acb0bd",
+  "failing_tests": [],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

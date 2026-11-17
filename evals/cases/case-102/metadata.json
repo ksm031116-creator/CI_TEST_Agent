@@ -1,0 +1,21 @@
+{
+  "case_id": "case-102",
+  "case_type": "log_clear",
+  "origin": "synthetic",
+  "input_id": "gha-44012874621-a1-j133803797364",
+  "input_bundle_sha256": "095cae7495ca66e12e95859f9a8b0ca4f0a061746593f019d403c01a1646e2e2",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 44012874621,
+  "run_attempt": 1,
+  "job_id": 133803797364,
+  "checkout_sha": "bfee6e7943560edad6a6283f573d2fa378833eb9",
+  "failing_tests": [
+    "tests/test_shipping.py::test_unknown_zone_rejected_for_delivery"
+  ],
+  "expected_log_only_solvable": true,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

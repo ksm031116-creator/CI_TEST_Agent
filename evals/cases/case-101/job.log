@@ -1,0 +1,383 @@
+pytest	Set up job	﻿2026-11-17T03:49:33.1632357Z Current runner version: '2.338.2'
+pytest	Set up job	2026-11-17T03:49:33.1702253Z ##[group]Runner Image Provisioner
+pytest	Set up job	2026-11-17T03:49:33.1733914Z Hosted Compute Agent
+pytest	Set up job	2026-11-17T03:49:33.1735083Z Version: 20261103.629
+pytest	Set up job	2026-11-17T03:49:33.1736259Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+pytest	Set up job	2026-11-17T03:49:33.1737811Z Build Date: 2026-11-03T17:26:59Z
+pytest	Set up job	2026-11-17T03:49:33.1739060Z Worker ID: {10405e4c-43b6-40ef-b1fe-48b430513d3e}
+pytest	Set up job	2026-11-17T03:49:33.1740495Z Region: centralus
+pytest	Set up job	2026-11-17T03:49:33.1741572Z Cloud: Azure
+pytest	Set up job	2026-11-17T03:49:33.1742575Z ##[endgroup]
+pytest	Set up job	2026-11-17T03:49:33.1745957Z ##[group]Operating System
+pytest	Set up job	2026-11-17T03:49:33.1747130Z Ubuntu
+pytest	Set up job	2026-11-17T03:49:33.1748144Z 24.04.5
+pytest	Set up job	2026-11-17T03:49:33.1749097Z LTS
+pytest	Set up job	2026-11-17T03:49:33.1749988Z ##[endgroup]
+pytest	Set up job	2026-11-17T03:49:33.1751117Z ##[group]Runner Image
+pytest	Set up job	2026-11-17T03:49:33.1752161Z Image: ubuntu-24.04
+pytest	Set up job	2026-11-17T03:49:33.1753165Z Version: 20261111.370.1
+pytest	Set up job	2026-11-17T03:49:33.1775684Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.370/images/ubuntu/Ubuntu2404-Readme.md
+pytest	Set up job	2026-11-17T03:49:33.1779386Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.370
+pytest	Set up job	2026-11-17T03:49:33.1781485Z ##[endgroup]
+pytest	Set up job	2026-11-17T03:49:33.1783879Z ##[group]GITHUB_TOKEN Permissions
+pytest	Set up job	2026-11-17T03:49:33.1787393Z Contents: read
+pytest	Set up job	2026-11-17T03:49:33.1788752Z Metadata: read
+pytest	Set up job	2026-11-17T03:49:33.1790005Z ##[endgroup]
+pytest	Set up job	2026-11-17T03:49:33.1814880Z Secret source: Actions
+pytest	Set up job	2026-11-17T03:49:33.1816608Z Cache mode: write
+pytest	Set up job	2026-11-17T03:49:33.1818306Z Prepare workflow directory
+pytest	Set up job	2026-11-17T03:49:33.2898995Z Prepare all required actions
+pytest	Set up job	2026-11-17T03:49:33.3056135Z Getting action download info
+pytest	Set up job	2026-11-17T03:49:33.5567890Z Download action repository 'actions/checkout@v7' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+pytest	Set up job	2026-11-17T03:49:33.7125412Z Download action repository 'actions/setup-python@v7' (SHA:6d4fd22b20465ccc0f7354476588e8df7c9ca0e0)
+pytest	Set up job	2026-11-17T03:49:33.8010860Z Download action repository 'actions/upload-artifact@v7' (SHA:cf430e030ddbb5b0abf93d22962f4752f3646cd9)
+pytest	Set up job	2026-11-17T03:49:33.9969041Z Complete job name: pytest
+pytest	Run actions/checkout@v7	﻿2026-11-17T03:49:34.0841387Z ##[group]Run actions/checkout@v7
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0842492Z with:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0843033Z   repository: ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0847227Z   token: ***
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0847667Z   ssh-strict: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0848111Z   ssh-user: git
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0848563Z   persist-credentials: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0849057Z   clean: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0849510Z   sparse-checkout-cone-mode: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0850079Z   fetch-depth: 1
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0850512Z   fetch-tags: false
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0850957Z   show-progress: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0851412Z   lfs: false
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0851833Z   submodules: false
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0852282Z   set-safe-directory: true
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0852792Z   allow-unsafe-pr-checkout: false
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.0853931Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4739842Z Syncing repository: ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4743121Z ##[group]Getting Git version info
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4744730Z Working directory is '/home/runner/work/ci-failure-target/ci-failure-target'
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4747801Z [command]/usr/bin/git version
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4912384Z git version 2.56.1
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.4986513Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5039768Z Temporarily overriding HOME='/home/runner/work/_temp/6798e729-3970-4542-8e60-51c8b0e4b571' before making global git config changes
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5043850Z Adding repository directory to the temporary git global config as a safe directory
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5066325Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5079009Z Deleting the contents of '/home/runner/work/ci-failure-target/ci-failure-target'
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5081679Z ##[group]Determining repository object format
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5084881Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5090957Z ##[group]Initializing the repository
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5093944Z [command]/usr/bin/git init /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5195442Z hint: Using 'master' as the name for the initial branch. This default branch name
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5200757Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5202384Z hint: to use in all of your new repositories, which will suppress this warning,
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5221076Z hint: call:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5221755Z hint:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5222609Z hint: 	git config --global init.defaultBranch <name>
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5223988Z hint:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5224913Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5226747Z hint: 'development'. The just-created branch can be renamed via this command:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5228363Z hint:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5229387Z hint: 	git branch -m <name>
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5230135Z hint:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5231186Z hint: Disable this message with "git config set advice.defaultBranchName false"
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5246124Z Initialized empty Git repository in /home/runner/work/ci-failure-target/ci-failure-target/.git/
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5251599Z [command]/usr/bin/git remote add origin https://github.com/ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5352183Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5353720Z ##[group]Disabling automatic garbage collection
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5354873Z [command]/usr/bin/git config --local gc.auto 0
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5417600Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5419452Z ##[group]Setting up auth
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5420814Z Removing SSH command configuration
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5423934Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.5645589Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6142302Z Removing HTTP extra header
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6149858Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6199601Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6484872Z Removing includeIf entries pointing to credentials config files
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6486764Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6536004Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6802813Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6858789Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path /home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6905967Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.6954510Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.7001409Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.7052648Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.7054713Z ##[group]Fetching the repository
+pytest	Run actions/checkout@v7	2026-11-17T03:49:34.7060697Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a22757795a7dc8df90524e9dc3329911af529206:refs/remotes/origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0285872Z From https://github.com/ksm031116-creator/ci-failure-target
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0295265Z  * [new ref]         a22757795a7dc8df90524e9dc3329911af529206 -> origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0301710Z [command]/usr/bin/git branch --list --remote origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0348809Z   origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0371487Z [command]/usr/bin/git rev-parse refs/remotes/origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0401904Z a22757795a7dc8df90524e9dc3329911af529206
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0409583Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0411954Z ##[group]Determining the checkout info
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0415514Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0417874Z [command]/usr/bin/git sparse-checkout disable
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0496788Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0549511Z ##[group]Checking out the ref
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0555803Z [command]/usr/bin/git checkout --progress --force -B case/101-coupon-value-type refs/remotes/origin/case/101-coupon-value-type
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0645516Z Switched to a new branch 'case/101-coupon-value-type'
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0663642Z branch 'case/101-coupon-value-type' set up to track 'origin/case/101-coupon-value-type'.
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0678318Z ##[endgroup]
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0721588Z [command]/usr/bin/git log -1 --format=%H
+pytest	Run actions/checkout@v7	2026-11-17T03:49:35.0764920Z a22757795a7dc8df90524e9dc3329911af529206
+pytest	Run actions/setup-python@v7	﻿2026-11-17T03:49:35.1197504Z ##[group]Run actions/setup-python@v7
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1199037Z with:
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1199956Z   python-version: 3.12
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1200999Z   check-latest: false
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1212070Z   token: ***
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1291243Z   mirror: https://raw.githubusercontent.com/actions/python-versions/main
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1294424Z   update-environment: true
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1296333Z   allow-prereleases: false
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1298105Z   freethreaded: false
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.1299640Z ##[endgroup]
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.2611812Z ##[group]Installed versions
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.2713083Z Successfully set up CPython (3.12.16)
+pytest	Run actions/setup-python@v7	2026-11-17T03:49:35.2716850Z ##[endgroup]
+pytest	Record checkout and environment	﻿2026-11-17T03:49:35.3013310Z ##[group]Run mkdir -p reports
+pytest	Record checkout and environment	2026-11-17T03:49:35.3015449Z ^[[36;1mmkdir -p reports^[[0m
+pytest	Record checkout and environment	2026-11-17T03:49:35.3017550Z ^[[36;1mgit rev-parse HEAD | tee reports/checkout_sha.txt^[[0m
+pytest	Record checkout and environment	2026-11-17T03:49:35.3020175Z ^[[36;1mpython --version | tee reports/python_version.txt^[[0m
+pytest	Record checkout and environment	2026-11-17T03:49:35.3087798Z shell: /usr/bin/bash -e {0}
+pytest	Record checkout and environment	2026-11-17T03:49:35.3089436Z env:
+pytest	Record checkout and environment	2026-11-17T03:49:35.3091075Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-17T03:49:35.3094200Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Record checkout and environment	2026-11-17T03:49:35.3097100Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-17T03:49:35.3099684Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-17T03:49:35.3102334Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Record checkout and environment	2026-11-17T03:49:35.3105139Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Record checkout and environment	2026-11-17T03:49:35.3107366Z ##[endgroup]
+pytest	Record checkout and environment	2026-11-17T03:49:35.3326396Z a22757795a7dc8df90524e9dc3329911af529206
+pytest	Record checkout and environment	2026-11-17T03:49:35.3494056Z Python 3.12.16
+pytest	Download shared test data	﻿2026-11-17T03:49:35.3586436Z ##[group]Run gh release download test-data --pattern prices.csv --dir tests/data --clobber
+pytest	Download shared test data	2026-11-17T03:49:35.3588944Z ^[[36;1mgh release download test-data --pattern prices.csv --dir tests/data --clobber^[[0m
+pytest	Download shared test data	2026-11-17T03:49:35.3612426Z shell: /usr/bin/bash -e {0}
+pytest	Download shared test data	2026-11-17T03:49:35.3613627Z env:
+pytest	Download shared test data	2026-11-17T03:49:35.3614760Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-17T03:49:35.3617594Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Download shared test data	2026-11-17T03:49:35.3619945Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-17T03:49:35.3621476Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-17T03:49:35.3623546Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Download shared test data	2026-11-17T03:49:35.3625330Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Download shared test data	2026-11-17T03:49:35.3635732Z   GH_TOKEN: ***
+pytest	Download shared test data	2026-11-17T03:49:35.3636551Z ##[endgroup]
+pytest	Install	﻿2026-11-17T03:49:36.1031879Z ##[group]Run pip install -e ".[test]"
+pytest	Install	2026-11-17T03:49:36.1032529Z ^[[36;1mpip install -e ".[test]"^[[0m
+pytest	Install	2026-11-17T03:49:36.1055776Z shell: /usr/bin/bash -e {0}
+pytest	Install	2026-11-17T03:49:36.1056284Z env:
+pytest	Install	2026-11-17T03:49:36.1056807Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-17T03:49:36.1057521Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Install	2026-11-17T03:49:36.1058190Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-17T03:49:36.1058783Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-17T03:49:36.1059363Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Install	2026-11-17T03:49:36.1059948Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Install	2026-11-17T03:49:36.1060476Z ##[endgroup]
+pytest	Install	2026-11-17T03:49:37.0707892Z Obtaining file:///home/runner/work/ci-failure-target/ci-failure-target
+pytest	Install	2026-11-17T03:49:37.0725775Z   Installing build dependencies: started
+pytest	Install	2026-11-17T03:49:38.0170372Z   Installing build dependencies: finished with status 'done'
+pytest	Install	2026-11-17T03:49:38.0179653Z   Checking if build backend supports build_editable: started
+pytest	Install	2026-11-17T03:49:38.4542900Z   Checking if build backend supports build_editable: finished with status 'done'
+pytest	Install	2026-11-17T03:49:38.4552226Z   Getting requirements to build editable: started
+pytest	Install	2026-11-17T03:49:38.8375249Z   Getting requirements to build editable: finished with status 'done'
+pytest	Install	2026-11-17T03:49:38.8381651Z   Preparing editable metadata (pyproject.toml): started
+pytest	Install	2026-11-17T03:49:39.0390115Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+pytest	Install	2026-11-17T03:49:39.1608642Z Collecting pytest>=8 (from shopcalc==0.1.0)
+pytest	Install	2026-11-17T03:49:39.2464931Z   Downloading pytest-9.2.0-py3-none-any.whl.metadata (7.9 kB)
+pytest	Install	2026-11-17T03:49:39.2698801Z Collecting iniconfig>=2 (from pytest>=8->shopcalc==0.1.0)
+pytest	Install	2026-11-17T03:49:39.2867448Z   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+pytest	Install	2026-11-17T03:49:39.3184366Z Collecting packaging>=24 (from pytest>=8->shopcalc==0.1.0)
+pytest	Install	2026-11-17T03:49:39.3344025Z   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+pytest	Install	2026-11-17T03:49:39.3586219Z Collecting pluggy<2,>=1.6 (from pytest>=8->shopcalc==0.1.0)
+pytest	Install	2026-11-17T03:49:39.3750410Z   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+pytest	Install	2026-11-17T03:49:39.4065091Z Collecting pygments>=2.15 (from pytest>=8->shopcalc==0.1.0)
+pytest	Install	2026-11-17T03:49:39.4344667Z   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+pytest	Install	2026-11-17T03:49:39.4582138Z Downloading pytest-9.2.0-py3-none-any.whl (411 kB)
+pytest	Install	2026-11-17T03:49:39.5266138Z Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+pytest	Install	2026-11-17T03:49:39.5459311Z Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+pytest	Install	2026-11-17T03:49:39.5650100Z Downloading packaging-26.3-py3-none-any.whl (129 kB)
+pytest	Install	2026-11-17T03:49:39.5870776Z Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+pytest	Install	2026-11-17T03:49:39.6212226Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 38.2 MB/s  0:00:00
+pytest	Install	2026-11-17T03:49:39.6404124Z Building wheels for collected packages: shopcalc
+pytest	Install	2026-11-17T03:49:39.6413096Z   Building editable for shopcalc (pyproject.toml): started
+pytest	Install	2026-11-17T03:49:39.8625026Z   Building editable for shopcalc (pyproject.toml): finished with status 'done'
+pytest	Install	2026-11-17T03:49:39.8627388Z   Created wheel for shopcalc: filename=shopcalc-0.1.0-0.editable-py3-none-any.whl size=1305 sha256=097e6ffd3333dff75dc44b1b0dfb03f03bf075adacd74f7f9a9fde173328308e
+pytest	Install	2026-11-17T03:49:39.8644887Z   Stored in directory: /tmp/pip-ephem-wheel-cache-d9mbzaip/wheels/2d/9b/46/1fdd8d478ff12b79127b852b8521b6e638784ca10b7cb340e6
+pytest	Install	2026-11-17T03:49:39.8664189Z Successfully built shopcalc
+pytest	Install	2026-11-17T03:49:39.9047106Z Installing collected packages: shopcalc, pygments, pluggy, packaging, iniconfig, pytest
+pytest	Install	2026-11-17T03:49:41.1281143Z 
+pytest	Install	2026-11-17T03:49:41.1295754Z Successfully installed iniconfig-2.3.1 packaging-26.3 pluggy-1.7.0 pygments-2.21.0 pytest-9.2.0 shopcalc-0.1.0
+pytest	Run tests	﻿2026-11-17T03:49:41.2061224Z ##[group]Run pytest --junitxml=reports/junit.xml -rA
+pytest	Run tests	2026-11-17T03:49:41.2061669Z ^[[36;1mpytest --junitxml=reports/junit.xml -rA^[[0m
+pytest	Run tests	2026-11-17T03:49:41.2083301Z shell: /usr/bin/bash -e {0}
+pytest	Run tests	2026-11-17T03:49:41.2083959Z env:
+pytest	Run tests	2026-11-17T03:49:41.2084236Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Run tests	2026-11-17T03:49:41.2084677Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Run tests	2026-11-17T03:49:41.2085110Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Run tests	2026-11-17T03:49:41.2085504Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Run tests	2026-11-17T03:49:41.2085889Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Run tests	2026-11-17T03:49:41.2086303Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Run tests	2026-11-17T03:49:41.2086649Z ##[endgroup]
+pytest	Run tests	2026-11-17T03:49:41.7018345Z ============================= test session starts ==============================
+pytest	Run tests	2026-11-17T03:49:41.7019427Z platform linux -- Python 3.12.16, pytest-9.2.0, pluggy-1.7.0
+pytest	Run tests	2026-11-17T03:49:41.7020647Z rootdir: /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Run tests	2026-11-17T03:49:41.7021612Z configfile: pyproject.toml
+pytest	Run tests	2026-11-17T03:49:41.7022279Z testpaths: tests
+pytest	Run tests	2026-11-17T03:49:41.7022908Z collected 53 items
+pytest	Run tests	2026-11-17T03:49:41.7023614Z 
+pytest	Run tests	2026-11-17T03:49:41.7124870Z tests/test_catalog.py .....                                              [  9%]
+pytest	Run tests	2026-11-17T03:49:41.7144443Z tests/test_catalog_data.py .                                             [ 11%]
+pytest	Run tests	2026-11-17T03:49:41.7224392Z tests/test_checkout.py ......                                            [ 22%]
+pytest	Run tests	2026-11-17T03:49:41.7550451Z tests/test_coupons.py .F...........                                      [ 47%]
+pytest	Run tests	2026-11-17T03:49:41.7586936Z tests/test_dates.py .....                                                [ 56%]
+pytest	Run tests	2026-11-17T03:49:41.7611616Z tests/test_inventory.py ...                                              [ 62%]
+pytest	Run tests	2026-11-17T03:49:41.7655586Z tests/test_loader.py ..                                                  [ 66%]
+pytest	Run tests	2026-11-17T03:49:41.7691480Z tests/test_orders.py ....                                                [ 73%]
+pytest	Run tests	2026-11-17T03:49:41.7760474Z tests/test_pricing.py ......                                             [ 84%]
+pytest	Run tests	2026-11-17T03:49:41.8093089Z tests/test_shipping.py ........                                          [100%]
+pytest	Run tests	2026-11-17T03:49:41.8094354Z 
+pytest	Run tests	2026-11-17T03:49:41.8114105Z =================================== FAILURES ===================================
+pytest	Run tests	2026-11-17T03:49:41.8134178Z ___________________ test_parse_percent_coupon_with_fraction ____________________
+pytest	Run tests	2026-11-17T03:49:41.8134985Z 
+pytest	Run tests	2026-11-17T03:49:41.8154115Z     def test_parse_percent_coupon_with_fraction():
+pytest	Run tests	2026-11-17T03:49:41.8174033Z >       coupon = parse_coupon(coupon_row(value="12.5"))
+pytest	Run tests	2026-11-17T03:49:41.8194521Z                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pytest	Run tests	2026-11-17T03:49:41.8195368Z 
+pytest	Run tests	2026-11-17T03:49:41.8214049Z tests/test_coupons.py:57: 
+pytest	Run tests	2026-11-17T03:49:41.8234128Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pytest	Run tests	2026-11-17T03:49:41.8248619Z 
+pytest	Run tests	2026-11-17T03:49:41.8270851Z row = {'code': ' welcome10 ', 'kind': 'Percent', 'value': '12.5', 'valid_from': '2026-11-01', ...}
+pytest	Run tests	2026-11-17T03:49:41.8271682Z 
+pytest	Run tests	2026-11-17T03:49:41.8294200Z     def parse_coupon(row: dict[str, str]) -> Coupon:
+pytest	Run tests	2026-11-17T03:49:41.8296736Z         """Build a coupon from `code,kind,value,valid_from,valid_until,min_subtotal` text fields."""
+pytest	Run tests	2026-11-17T03:49:41.8314124Z         kind = row["kind"].strip().lower()
+pytest	Run tests	2026-11-17T03:49:41.8322094Z         if kind not in (PERCENT, FIXED):
+pytest	Run tests	2026-11-17T03:49:41.8334135Z             raise CouponError(f"unknown coupon kind: {kind}")
+pytest	Run tests	2026-11-17T03:49:41.8354014Z         return Coupon(
+pytest	Run tests	2026-11-17T03:49:41.8374027Z             code=row["code"].strip().upper(),
+pytest	Run tests	2026-11-17T03:49:41.8383608Z             kind=kind,
+pytest	Run tests	2026-11-17T03:49:41.8394070Z >           value=int(row["value"]),
+pytest	Run tests	2026-11-17T03:49:41.8414032Z                   ^^^^^^^^^^^^^^^^^
+pytest	Run tests	2026-11-17T03:49:41.8434061Z             valid_from=date.fromisoformat(row["valid_from"]),
+pytest	Run tests	2026-11-17T03:49:41.8446254Z             valid_until=date.fromisoformat(row["valid_until"]),
+pytest	Run tests	2026-11-17T03:49:41.8454113Z             min_subtotal=Decimal(row.get("min_subtotal") or "0"),
+pytest	Run tests	2026-11-17T03:49:41.8473920Z         )
+pytest	Run tests	2026-11-17T03:49:41.8489892Z E       ValueError: invalid literal for int() with base 10: '12.5'
+pytest	Run tests	2026-11-17T03:49:41.8504931Z 
+pytest	Run tests	2026-11-17T03:49:41.8505380Z src/shopcalc/coupons.py:35: ValueError
+pytest	Run tests	2026-11-17T03:49:41.8506223Z ==================================== PASSES ====================================
+pytest	Run tests	2026-11-17T03:49:41.8507377Z - generated xml file: /home/runner/work/ci-failure-target/ci-failure-target/reports/junit.xml -
+pytest	Run tests	2026-11-17T03:49:41.8508570Z =========================== short test summary info ============================
+pytest	Run tests	2026-11-17T03:49:41.8509651Z PASSED tests/test_catalog.py::test_get_returns_added_product
+pytest	Run tests	2026-11-17T03:49:41.8510575Z PASSED tests/test_catalog.py::test_unknown_sku_raises
+pytest	Run tests	2026-11-17T03:49:41.8511454Z PASSED tests/test_catalog.py::test_duplicate_sku_rejected
+pytest	Run tests	2026-11-17T03:49:41.8512403Z PASSED tests/test_catalog.py::test_negative_price_rejected
+pytest	Run tests	2026-11-17T03:49:41.8513283Z PASSED tests/test_catalog.py::test_free_product_allowed
+pytest	Run tests	2026-11-17T03:49:41.8514527Z PASSED tests/test_catalog_data.py::test_reference_order_total
+pytest	Run tests	2026-11-17T03:49:41.8515568Z PASSED tests/test_checkout.py::test_checkout_without_coupon
+pytest	Run tests	2026-11-17T03:49:41.8516564Z PASSED tests/test_checkout.py::test_checkout_free_shipping
+pytest	Run tests	2026-11-17T03:49:41.8524585Z PASSED tests/test_checkout.py::test_checkout_applies_coupon
+pytest	Run tests	2026-11-17T03:49:41.8525730Z PASSED tests/test_checkout.py::test_discount_can_remove_free_shipping
+pytest	Run tests	2026-11-17T03:49:41.8526894Z PASSED tests/test_checkout.py::test_checkout_with_coupon_rows
+pytest	Run tests	2026-11-17T03:49:41.8528059Z PASSED tests/test_checkout.py::test_expired_coupon_rejected_at_checkout
+pytest	Run tests	2026-11-17T03:49:41.8529249Z PASSED tests/test_coupons.py::test_parse_coupon_normalises_code_and_kind
+pytest	Run tests	2026-11-17T03:49:41.8530160Z PASSED tests/test_coupons.py::test_parse_min_subtotal_defaults_to_zero
+pytest	Run tests	2026-11-17T03:49:41.8530972Z PASSED tests/test_coupons.py::test_parse_unknown_kind_rejected
+pytest	Run tests	2026-11-17T03:49:41.8531739Z PASSED tests/test_coupons.py::test_percent_discount_rounds_to_won
+pytest	Run tests	2026-11-17T03:49:41.8532427Z PASSED tests/test_coupons.py::test_fixed_discount
+pytest	Run tests	2026-11-17T03:49:41.8533055Z PASSED tests/test_coupons.py::test_min_subtotal_enforced
+pytest	Run tests	2026-11-17T03:49:41.8534158Z PASSED tests/test_coupons.py::test_is_valid_on_inside_period
+pytest	Run tests	2026-11-17T03:49:41.8534951Z PASSED tests/test_coupons.py::test_coupon_not_valid_before_start
+pytest	Run tests	2026-11-17T03:49:41.8535544Z PASSED tests/test_coupons.py::test_coupon_usable_on_last_day
+pytest	Run tests	2026-11-17T03:49:41.8536047Z PASSED tests/test_coupons.py::test_best_coupon_prefers_larger_discount
+pytest	Run tests	2026-11-17T03:49:41.8536539Z PASSED tests/test_coupons.py::test_best_coupon_tie_goes_to_first_code
+pytest	Run tests	2026-11-17T03:49:41.8537009Z PASSED tests/test_coupons.py::test_best_coupon_none_when_nothing_usable
+pytest	Run tests	2026-11-17T03:49:41.8537462Z PASSED tests/test_dates.py::test_weekday_is_business_day
+pytest	Run tests	2026-11-17T03:49:41.8537889Z PASSED tests/test_dates.py::test_sunday_is_not_business_day
+pytest	Run tests	2026-11-17T03:49:41.8538302Z PASSED tests/test_dates.py::test_add_business_days_within_week
+pytest	Run tests	2026-11-17T03:49:41.8538700Z PASSED tests/test_dates.py::test_add_zero_days_returns_start
+pytest	Run tests	2026-11-17T03:49:41.8539074Z PASSED tests/test_dates.py::test_negative_days_rejected
+pytest	Run tests	2026-11-17T03:49:41.8539493Z PASSED tests/test_inventory.py::test_reserve_reduces_available
+pytest	Run tests	2026-11-17T03:49:41.8539926Z PASSED tests/test_inventory.py::test_reserve_more_than_available_fails
+pytest	Run tests	2026-11-17T03:49:41.8540370Z PASSED tests/test_inventory.py::test_commit_removes_from_on_hand
+pytest	Run tests	2026-11-17T03:49:41.8540779Z PASSED tests/test_loader.py::test_loads_products_with_prices
+pytest	Run tests	2026-11-17T03:49:41.8541386Z PASSED tests/test_loader.py::test_taxable_flag_is_parsed
+pytest	Run tests	2026-11-17T03:49:41.8541738Z PASSED tests/test_orders.py::test_order_totals
+pytest	Run tests	2026-11-17T03:49:41.8542176Z PASSED tests/test_orders.py::test_order_reserves_stock
+pytest	Run tests	2026-11-17T03:49:41.8542759Z PASSED tests/test_orders.py::test_failed_order_releases_reservations
+pytest	Run tests	2026-11-17T03:49:41.8543181Z PASSED tests/test_orders.py::test_too_many_items_rejected
+pytest	Run tests	2026-11-17T03:49:41.8544149Z PASSED tests/test_pricing.py::test_round_won_half_up
+pytest	Run tests	2026-11-17T03:49:41.8544801Z PASSED tests/test_pricing.py::test_subtotal_below_bulk_threshold
+pytest	Run tests	2026-11-17T03:49:41.8545258Z PASSED tests/test_pricing.py::test_bulk_discount_applies_at_threshold
+pytest	Run tests	2026-11-17T03:49:41.8545682Z PASSED tests/test_pricing.py::test_zero_quantity_rejected
+pytest	Run tests	2026-11-17T03:49:41.8546067Z PASSED tests/test_pricing.py::test_tax_for_taxable_product
+pytest	Run tests	2026-11-17T03:49:41.8546459Z PASSED tests/test_pricing.py::test_no_tax_for_exempt_product
+pytest	Run tests	2026-11-17T03:49:41.8546864Z PASSED tests/test_shipping.py::test_fee_below_free_threshold
+pytest	Run tests	2026-11-17T03:49:41.8547286Z PASSED tests/test_shipping.py::test_free_shipping_at_threshold
+pytest	Run tests	2026-11-17T03:49:41.8547685Z PASSED tests/test_shipping.py::test_remote_surcharge_added
+pytest	Run tests	2026-11-17T03:49:41.8548133Z PASSED tests/test_shipping.py::test_remote_surcharge_applies_to_free_shipping
+pytest	Run tests	2026-11-17T03:49:41.8548623Z PASSED tests/test_shipping.py::test_unknown_zone_rejected_for_fee
+pytest	Run tests	2026-11-17T03:49:41.8549070Z PASSED tests/test_shipping.py::test_unknown_zone_rejected_for_delivery
+pytest	Run tests	2026-11-17T03:49:41.8549507Z PASSED tests/test_shipping.py::test_standard_delivery_midweek
+pytest	Run tests	2026-11-17T03:49:41.8549926Z PASSED tests/test_shipping.py::test_remote_delivery_skips_weekend
+pytest	Run tests	2026-11-17T03:49:41.8550587Z FAILED tests/test_coupons.py::test_parse_percent_coupon_with_fraction - ValueError: invalid literal for int() with base 10: '12.5'
+pytest	Run tests	2026-11-17T03:49:41.8551237Z ========================= 1 failed, 52 passed in 0.17s =========================
+pytest	Run tests	2026-11-17T03:49:41.8560621Z ##[error]Process completed with exit code 1.
+pytest	Upload reports	﻿2026-11-17T03:49:41.8649193Z ##[group]Run actions/upload-artifact@v7
+pytest	Upload reports	2026-11-17T03:49:41.8649511Z with:
+pytest	Upload reports	2026-11-17T03:49:41.8649711Z   name: pytest-reports
+pytest	Upload reports	2026-11-17T03:49:41.8649933Z   path: reports/
+pytest	Upload reports	2026-11-17T03:49:41.8650143Z   if-no-files-found: warn
+pytest	Upload reports	2026-11-17T03:49:41.8650387Z   compression-level: 6
+pytest	Upload reports	2026-11-17T03:49:41.8650600Z   overwrite: false
+pytest	Upload reports	2026-11-17T03:49:41.8650820Z   include-hidden-files: false
+pytest	Upload reports	2026-11-17T03:49:41.8651055Z   archive: true
+pytest	Upload reports	2026-11-17T03:49:41.8651241Z env:
+pytest	Upload reports	2026-11-17T03:49:41.8651498Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-17T03:49:41.8651932Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+pytest	Upload reports	2026-11-17T03:49:41.8652355Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-17T03:49:41.8652736Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-17T03:49:41.8653116Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+pytest	Upload reports	2026-11-17T03:49:41.8653947Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+pytest	Upload reports	2026-11-17T03:49:41.8654350Z ##[endgroup]
+pytest	Upload reports	2026-11-17T03:49:42.0354242Z With the provided path, there will be 3 files uploaded
+pytest	Upload reports	2026-11-17T03:49:42.0374443Z Artifact name is valid!
+pytest	Upload reports	2026-11-17T03:49:42.0393819Z Root directory input is valid!
+pytest	Upload reports	2026-11-17T03:49:42.3205158Z Uploading artifact: pytest-reports.zip
+pytest	Upload reports	2026-11-17T03:49:42.3230311Z Beginning upload of artifact content to blob storage
+pytest	Upload reports	2026-11-17T03:49:42.5463274Z Uploaded bytes 1900
+pytest	Upload reports	2026-11-17T03:49:42.5944717Z Finished uploading artifact content to blob storage!
+pytest	Upload reports	2026-11-17T03:49:42.5946048Z SHA256 digest of uploaded artifact is 40c0d2917524d495da902ae7084db4ab4102fd3b05fbf3b5712f02012bb3a897
+pytest	Upload reports	2026-11-17T03:49:42.5947431Z Finalizing artifact upload
+pytest	Upload reports	2026-11-17T03:49:42.9664482Z Artifact pytest-reports successfully finalized. Artifact ID 14296489485
+pytest	Upload reports	2026-11-17T03:49:42.9666077Z Artifact pytest-reports has been successfully uploaded! Final size is 1900 bytes. Artifact ID is 14296489485
+pytest	Upload reports	2026-11-17T03:49:42.9684929Z Artifact download URL: https://github.com/ksm031116-creator/ci-failure-target/actions/runs/44012874739/artifacts/14296489485
+pytest	Post Run actions/checkout@v7	﻿2026-11-17T03:49:42.9911482Z Post job cleanup.
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.0929383Z [command]/usr/bin/git version
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1006338Z git version 2.56.1
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1065992Z Temporarily overriding HOME='/home/runner/work/_temp/d6526da4-6873-4272-9bff-3aad29de7775' before making global git config changes
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1075740Z Adding repository directory to the temporary git global config as a safe directory
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1079027Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/ci-failure-target/ci-failure-target
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1157929Z Removing SSH command configuration
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1158956Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1225257Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1668523Z Removing HTTP extra header
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1669686Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.1751158Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2642138Z Removing includeIf entries pointing to credentials config files
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2667718Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2729984Z includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2745618Z includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2746904Z includeif.gitdir:/github/workspace/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2747698Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2756030Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2840830Z /home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2873894Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git.path \/home\/runner\/work\/_temp\/git\-credentials\-80862efb\-0856\-4747\-bb41\-b31094d7f0ca\.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.2932897Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3030251Z /home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3048815Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/ci-failure-target/ci-failure-target/.git/worktrees/*.path \/home\/runner\/work\/_temp\/git\-credentials\-80862efb\-0856\-4747\-bb41\-b31094d7f0ca\.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3172464Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3221634Z /github/runner_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3226096Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-80862efb\-0856\-4747\-bb41\-b31094d7f0ca\.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3331739Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3363059Z /github/runner_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3395028Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-80862efb\-0856\-4747\-bb41\-b31094d7f0ca\.config
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3482039Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+pytest	Post Run actions/checkout@v7	2026-11-17T03:49:43.3886280Z Removing credentials config '/home/runner/work/_temp/git-credentials-80862efb-0856-4747-bb41-b31094d7f0ca.config'
+pytest	Complete job	﻿2026-11-17T03:49:43.4106677Z Cleaning up orphan processes
