@@ -1,0 +1,24 @@
+{
+  "case_id": "case-101",
+  "root_cause": {
+    "file": "src/shopcalc/coupons.py",
+    "line": 35,
+    "summary": "parse_coupon이 쿠폰 값을 `Decimal`이 아닌 `int`로 변환해 소수 값(`12.5`)에서 ValueError가 난다."
+  },
+  "fault_commit_message": "refactor: 쿠폰 값 파싱 단순화",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "parse_coupon의 `int(row[\"value\"])` 변환이 소수 값을 처리하지 못함"
+  ],
+  "required_evidence": [
+    "로그 traceback의 coupons.py `value=int(row[\"value\"])` 줄",
+    "`ValueError: invalid literal for int() with base 10: '12.5'`"
+  ],
+  "incorrect_conclusions": [
+    "테스트 입력 데이터(`12.5`)가 잘못됨",
+    "Coupon 데이터클래스의 필드 정의 오류"
+  ],
+  "fix_summary": "`Decimal(row[\"value\"])`로 되돌린다."
+}

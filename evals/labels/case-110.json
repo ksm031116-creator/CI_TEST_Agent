@@ -1,0 +1,24 @@
+{
+  "case_id": "case-110",
+  "root_cause": {
+    "file": ".github/workflows/tests.yml",
+    "line": 39,
+    "summary": "워크플로에 추가된 `python -m build --sdist` 단계가 `build` 패키지를 설치하지 않아 실패한다. 테스트는 모두 통과했다."
+  },
+  "fault_commit_message": "ci: 배포용 패키지 빌드 확인 단계 추가",
+  "acceptable_conclusions": [
+    "out_of_scope"
+  ],
+  "expected_reason_code": "not_test_failure",
+  "accepted_candidates": [],
+  "required_evidence": [
+    "JUnit XML에 실패·오류 없음",
+    "작업의 `Build package` 단계 실패"
+  ],
+  "incorrect_conclusions": [
+    "테스트 실패로 분석",
+    "시스템 오류로 처리"
+  ],
+  "fix_summary": "빌드 단계 앞에 `pip install build`를 추가한다.",
+  "notes": "dev의 out_of_scope(case-012, 사유 `no_junit`)와 사유 코드가 다르다."
+}
