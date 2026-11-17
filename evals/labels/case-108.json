@@ -1,0 +1,26 @@
+{
+  "case_id": "case-108",
+  "root_cause": {
+    "file": null,
+    "line": null,
+    "summary": "커밋이 추가한 테스트는 소계보다 큰 정액 쿠폰이 거부되기를 기대하지만, 구현은 할인액을 소계로 제한한다. 어느 쪽이 요구사항인지는 분석 입력에 없다."
+  },
+  "fault_commit_message": "test: 쿠폰 금액 경계 테스트 추가",
+  "acceptable_conclusions": [
+    "insufficient_evidence",
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "새 테스트의 기대(거부)와 coupon_discount의 구현(`min(coupon.value, subtotal)`)이 다름. 요구사항 확인을 확인 방법으로 제시해야 함"
+  ],
+  "required_evidence": [
+    "로그의 `Failed: DID NOT RAISE` (test_fixed_coupon_larger_than_subtotal_is_rejected)",
+    "coupons.py의 `return min(coupon.value, subtotal)`"
+  ],
+  "incorrect_conclusions": [
+    "요구사항 확인 없이 coupon_discount의 버그로 단정",
+    "최소 주문 금액 검사 오류로 단정"
+  ],
+  "fix_summary": "요구사항에 따라 테스트를 고치거나 구현에 거부 로직을 넣는다. 사례에서는 정하지 않았다.",
+  "notes": "dev의 insufficient_evidence(외부 데이터 변경)와 다른 계열이다: 필요한 정보가 요구사항이다."
+}

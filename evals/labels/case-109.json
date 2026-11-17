@@ -1,0 +1,27 @@
+{
+  "case_id": "case-109",
+  "root_cause": {
+    "file": "src/shopcalc/formatting.py",
+    "line": 9,
+    "summary": "format_won이 실행 환경의 로캘(`setlocale(LC_ALL, \"\")`)에 따라 천 단위 구분을 하므로, 구분 기호가 없는 로캘의 CI 러너에서는 `12000 KRW`가 된다. 러너의 로캘 값은 분석 입력에 없다."
+  },
+  "fault_commit_message": "feat: 금액 표시 함수 추가",
+  "acceptable_conclusions": [
+    "insufficient_evidence",
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "format_won의 결과가 러너 로캘에 의존함. 러너의 로캘 확인을 확인 방법으로 제시해야 함"
+  ],
+  "required_evidence": [
+    "로그의 `assert '12000 KRW' == '12,000 KRW'`",
+    "formatting.py의 `locale.setlocale(locale.LC_ALL, \"\")`와 `grouping=True`"
+  ],
+  "incorrect_conclusions": [
+    "`grouping=True`가 빠졌다고 단정",
+    "테스트 기대값 오류로 단정",
+    "format_string 사용법 오류로 단정"
+  ],
+  "fix_summary": "로캘에 의존하지 않는 `f\"{int(amount):,}\"`로 바꾼다.",
+  "notes": "개발자 환경(한국어 Windows)에서는 통과하고 CI에서만 실패한다. dev의 외부 데이터 계열과 달리 필요한 정보가 실행 환경이다."
+}

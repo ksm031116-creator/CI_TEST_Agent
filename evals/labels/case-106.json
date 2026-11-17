@@ -1,0 +1,27 @@
+{
+  "case_id": "case-106",
+  "root_cause": {
+    "file": "src/shopcalc/coupons.py",
+    "line": 36,
+    "summary": "parse_coupon이 `valid_from`과 `valid_until`을 서로 바꿔 읽어, 파싱한 쿠폰이 기간 안의 날짜에도 유효하지 않다."
+  },
+  "fault_commit_message": "style: 쿠폰 파싱 필드 순서 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "parse_coupon의 유효 기간 필드가 뒤바뀜"
+  ],
+  "required_evidence": [
+    "로그의 `CouponError: coupon WELCOME10 is not valid on 2026-11-17` (checkout → coupon_discount)",
+    "coupons.py parse_coupon의 `valid_from=date.fromisoformat(row[\"valid_until\"])`",
+    "test_checkout.py COUPON_ROWS의 기간이 2026-11-01~2026-11-30임"
+  ],
+  "incorrect_conclusions": [
+    "is_valid_on의 비교 오류",
+    "checkout이 잘못된 날짜를 넘김",
+    "COUPON_ROWS 테스트 데이터의 기간 오류"
+  ],
+  "fix_summary": "두 필드의 키를 되돌린다.",
+  "notes": "예외는 checkout이 호출한 coupon_discount에서 발생한다. parse_coupon을 직접 검사하는 테스트는 기간을 확인하지 않아 통과한다."
+}

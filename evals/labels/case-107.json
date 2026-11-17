@@ -1,0 +1,27 @@
+{
+  "case_id": "case-107",
+  "root_cause": {
+    "file": "src/shopcalc/dates.py",
+    "line": 18,
+    "summary": "add_business_days가 반복 중인 날짜가 아닌 시작일의 영업일 여부를 검사해 주말도 영업일로 센다."
+  },
+  "fault_commit_message": "refactor: 영업일 계산 변수 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "add_business_days의 `is_business_day(start)` (올바른 인자는 `current`)"
+  ],
+  "required_evidence": [
+    "로그의 `assert datetime.date(2026, 11, 23) == datetime.date(2026, 11, 25)`",
+    "shipping.py estimate_delivery가 add_business_days를 호출함",
+    "dates.py의 `if is_business_day(start):`"
+  ],
+  "incorrect_conclusions": [
+    "shipping.py `_LEAD_DAYS`의 remote 일수 오류",
+    "is_business_day의 요일 판정 오류",
+    "테스트 기대값 오류"
+  ],
+  "fix_summary": "`is_business_day(current)`로 되돌린다.",
+  "notes": "실패한 테스트는 shipping 테스트이고 원인은 다른 모듈(dates)에 있다. dates 테스트는 주말을 넘기지 않아 통과한다."
+}

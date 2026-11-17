@@ -1,0 +1,21 @@
+{
+  "case_id": "case-106",
+  "case_type": "distant_cause",
+  "origin": "synthetic",
+  "input_id": "gha-44012875365-a1-j133803799222",
+  "input_bundle_sha256": "865fa5bf71ebf6827b2ea0c60b7908ba997329eac0cf15a4d3d6cfd4dfb18bdd",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 44012875365,
+  "run_attempt": 1,
+  "job_id": 133803799222,
+  "checkout_sha": "4082a5f788c0281ab1164fcba9b6cb83de86c1c3",
+  "failing_tests": [
+    "tests/test_checkout.py::test_checkout_with_coupon_rows"
+  ],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

@@ -1,0 +1,26 @@
+{
+  "case_id": "case-103",
+  "root_cause": {
+    "file": "src/shopcalc/coupons.py",
+    "line": 43,
+    "summary": "is_valid_on의 종료일 비교가 `<=`에서 `<`로 바뀌어 유효 기간 마지막 날에 쿠폰이 거부된다."
+  },
+  "fault_commit_message": "refactor: 쿠폰 유효 기간 비교 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "is_valid_on이 종료일을 포함하지 않음(`day < coupon.valid_until`)"
+  ],
+  "required_evidence": [
+    "로그의 `CouponError: coupon WELCOME10 is not valid on 2026-11-30`",
+    "coupons.py의 `return coupon.valid_from <= day < coupon.valid_until`",
+    "test_coupons.py의 welcome fixture 종료일이 2026-11-30임"
+  ],
+  "incorrect_conclusions": [
+    "welcome fixture의 유효 기간이 잘못 정의됨",
+    "coupon_discount의 최소 금액 검사 오류"
+  ],
+  "fix_summary": "비교를 `<= coupon.valid_until`로 되돌린다.",
+  "notes": "예외는 coupon_discount에서 발생하고, 원인 함수 is_valid_on은 traceback에 나오지 않는다."
+}

@@ -1,0 +1,24 @@
+{
+  "case_id": "case-104",
+  "root_cause": {
+    "file": "src/shopcalc/coupons.py",
+    "line": 67,
+    "summary": "best_coupon의 할인액 정렬에서 `reverse=True`가 빠져 할인액이 가장 작은 쿠폰을 고른다."
+  },
+  "fault_commit_message": "refactor: 쿠폰 정렬 코드 정리",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "best_coupon이 할인액 오름차순으로 정렬한 뒤 첫 항목을 반환함"
+  ],
+  "required_evidence": [
+    "로그의 `assert 'SAVE3000' == 'WELCOME10'`",
+    "coupons.py의 `usable.sort(key=lambda pair: pair[0])`와 `return usable[0][1]`"
+  ],
+  "incorrect_conclusions": [
+    "coupon_discount의 정률 할인 계산 오류",
+    "테스트의 쿠폰 입력 순서 문제"
+  ],
+  "fix_summary": "정렬에 `reverse=True`를 되돌린다."
+}

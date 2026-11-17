@@ -1,0 +1,21 @@
+{
+  "case_id": "case-107",
+  "case_type": "distant_cause",
+  "origin": "synthetic",
+  "input_id": "gha-44012874776-a1-j133803797349",
+  "input_bundle_sha256": "92f855f456980325dc0dbb583a7acf5fa75c74fc7a7e45042a0e6b682c38700b",
+  "repository": "ksm031116-creator/ci-failure-target",
+  "run_id": 44012874776,
+  "run_attempt": 1,
+  "job_id": 133803797349,
+  "checkout_sha": "813bd4cd2744a35fc02f05294f11753233ee22df",
+  "failing_tests": [
+    "tests/test_shipping.py::test_remote_delivery_skips_weekend"
+  ],
+  "expected_log_only_solvable": false,
+  "included_files": [
+    "job.log",
+    "junit.xml"
+  ],
+  "masking": "none (gitleaks scan: no leaks)"
+}

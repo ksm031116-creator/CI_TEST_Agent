@@ -1,0 +1,26 @@
+{
+  "case_id": "case-105",
+  "root_cause": {
+    "file": "src/shopcalc/checkout.py",
+    "line": 28,
+    "summary": "checkout이 배송비를 할인 후 금액이 아닌 할인 전 소계로 계산해, 할인으로 무료 배송 기준 아래가 된 주문에 배송비가 붙지 않는다."
+  },
+  "fault_commit_message": "refactor: 결제 계산 단순화",
+  "acceptable_conclusions": [
+    "cause_candidate"
+  ],
+  "accepted_candidates": [
+    "checkout이 shipping_fee에 `order.subtotal`(할인 전)을 넘김"
+  ],
+  "required_evidence": [
+    "로그의 `assert Decimal('0') == Decimal('3000')`",
+    "checkout.py의 `shipping = shipping_fee(order.subtotal, zone, config)`",
+    "테스트의 소계 31000, 할인 3000과 무료 배송 기준 30000"
+  ],
+  "incorrect_conclusions": [
+    "shipping_fee의 기준 비교 오류",
+    "free_shipping_threshold 설정 변경",
+    "쿠폰 할인이 적용되지 않음"
+  ],
+  "fix_summary": "`shipping_fee(order.subtotal - discount, zone, config)`로 되돌린다."
+}
