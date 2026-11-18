@@ -7,6 +7,7 @@ from ci_failure_analyzer.evaluation.grading import (
     MISMATCH,
     PARTIAL,
     SPEC_VERSION,
+    RunScore,
     automatic_verdict,
     conclusion_allowed,
     grading_problems,
@@ -15,6 +16,7 @@ from ci_failure_analyzer.evaluation.grading import (
     top_candidate_index,
     wrong_high_candidates,
 )
+from ci_failure_analyzer.evaluation.summary import case_summary, cost_summary, match_counts, method_summary
 
 SHA = "a" * 64
 LABEL = {
@@ -185,3 +187,91 @@ def test_analysis_code_does_not_import_evaluation_or_read_labels():
         source = path.read_text(encoding="utf-8")
         for forbidden in ("ci_failure_analyzer.evaluation", "..evaluation", "gradings", "labels/"):
             assert forbidden not in source, f"{path.name} mentions {forbidden}"
+
+
+def _score(case_id, method, verdict, conclusion="cause_candidate", key="k", **changes):
+    values = {
+        "run_id": f"{case_id}-{method}-{verdict}",
+        "case_id": case_id,
+        "method": method,
+        "has_report": True,
+        "first_reply_passed": True,
+        "conclusion": conclusion,
+        "conclusion_allowed": True,
+        "location": "line",
+        "verdict": verdict,
+        "verdict_source": "grader",
+        "reviewed": False,
+        "withheld": False,
+        "wrong_high": False,
+        "top_candidate_key": key,
+    }
+    return RunScore(**(values | changes))
+
+
+def test_method_summary_counts_runs():
+    rows = [
+        _score("c1", "A", MATCH),
+        _score("c1", "A", PARTIAL, withheld=True, conclusion_allowed=False, location="none"),
+        _score("c2", "A", MISMATCH, location="other", wrong_high=True, reviewed=True, verdict_source="reviewed"),
+        _score("c3", "A", MATCH, location="n/a", first_reply_passed=None, verdict_source="code"),
+        _score("c4", "A", None, verdict_source="ungraded"),
+    ]
+    summary = method_summary(rows)
+    assert summary["runs"] == 5
+    assert summary["verdicts"] == {MATCH: 2, PARTIAL: 1, MISMATCH: 1, "ungraded": 1}
+    assert summary["correct_but_withheld"] == 1
+    assert summary["wrong_high_confidence"] == 1
+    assert summary["conclusion_allowed"] == 4
+    assert summary["location"] == {"line": 2, "file": 0, "other": 1, "none": 1, "applicable": 4}
+    assert summary["first_reply_passed"] == {"passed": 4, "called": 4}
+    assert summary["reviewed"] == {"reviewed": 1, "judged": 3}
+
+
+def test_case_summary_compares_the_runs_of_each_case():
+    groups = [
+        [_score("c1", "A", MATCH), _score("c1", "A", MATCH), _score("c1", "A", MATCH)],
+        [_score("c2", "A", MATCH), _score("c2", "A", MATCH, key="other"), _score("c2", "A", PARTIAL, conclusion="insufficient_evidence")],
+        [_score("c3", "A", MISMATCH, key=None), _score("c3", "A", MISMATCH, key=None)],
+        [],
+    ]
+    assert case_summary(groups) == {
+        "cases": 3,
+        "all_runs_match": 1,
+        "majority_match": 2,
+        "same_verdict": 2,
+        "same_conclusion": 2,
+        "same_top_candidate": 1,
+        "cases_with_top_candidate": 2,
+    }
+
+
+def test_cost_summary_adds_manifests_and_averages_only_runs_that_called_the_model():
+    manifests = [
+        {"model_calls": 1, "input_tokens": 100, "output_tokens": 10, "cost_usd": "0.100000", "duration_seconds": 10.0},
+        {"model_calls": 3, "input_tokens": 300, "output_tokens": 30, "cost_usd": "0.300001", "duration_seconds": 30.0, "tool_call_count": 5},
+        {"model_calls": 0, "input_tokens": 0, "output_tokens": 0, "cost_usd": "0", "duration_seconds": 0.0},
+    ]
+    assert cost_summary(manifests) == {
+        "runs": 3,
+        "runs_with_calls": 2,
+        "model_calls": 4,
+        "tool_calls": 5,
+        "input_tokens": 400,
+        "output_tokens": 40,
+        "cost_usd": "0.400001",
+        "cost_usd_per_run": "0.200000",
+        "max_cost_usd": "0.300001",
+        "median_duration_seconds": 20.0,
+        "max_duration_seconds": 30.0,
+    }
+    empty = cost_summary([{"model_calls": 0, "cost_usd": "0"}])
+    assert empty["cost_usd"] == "0.000000" and empty["cost_usd_per_run"] is None and empty["median_duration_seconds"] is None
+
+
+def test_match_counts_leave_a_method_without_runs_empty():
+    scores = [_score("c1", "A", MATCH), _score("c1", "A", PARTIAL), _score("c1", "B", MATCH)]
+    assert match_counts(scores, ["c1", "c2"], ["A", "B", "C"]) == {
+        "c1": {"A": {"match": 1, "runs": 2}, "B": {"match": 1, "runs": 1}, "C": None},
+        "c2": {"A": None, "B": None, "C": None},
+    }
