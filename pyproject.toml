@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Analyze pytest CI failures and report cause candidates with evidence"
 requires-python = ">=3.12"
 dependencies = [
+    "anthropic>=2.10.0",
     "pydantic>=2.9",
 ]
 

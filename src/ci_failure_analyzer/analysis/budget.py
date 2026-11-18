@@ -34,6 +34,7 @@ class ModelPrice:
 @dataclass(frozen=True)
 class BudgetConfig:
     model: str
+    effort: str
     max_output_tokens: int
     total_limit_usd: Decimal
     pricing_date: str
@@ -57,6 +58,7 @@ def load_config(path: Path) -> BudgetConfig:
         raise ValueError("budget.total_limit_usd must be positive")
     return BudgetConfig(
         model=data["model"],
+        effort=data["effort"],
         max_output_tokens=int(data["max_output_tokens"]),
         total_limit_usd=limit,
         pricing_date=str(data["pricing"]["date"]),
@@ -102,15 +104,27 @@ class UsageLedger:
     def remaining_usd(self) -> Decimal:
         return self.config.total_limit_usd - self.total_usd()
 
-    def reserve(self, model: str, prompt_text: str, max_output_tokens: int | None = None) -> Decimal:
-        """Check that the worst case of the next call fits. Returns that worst case."""
+    def reserve(
+        self,
+        model: str,
+        prompt_text: str,
+        max_output_tokens: int | None = None,
+        ceiling_usd: Decimal | None = None,
+    ) -> Decimal:
+        """Check that the worst case of the next call fits. Returns that worst case.
+
+        `ceiling_usd` is a lower limit on total spending for the current piece of
+        work, such as one day's approved amount. The project limit always applies.
+        """
         output_tokens = self.config.max_output_tokens if max_output_tokens is None else max_output_tokens
         worst = cost_usd(self.config.price(model), estimate_input_tokens(prompt_text), output_tokens)
         spent = self.total_usd()
-        if spent + worst > self.config.total_limit_usd:
+        limit = self.config.total_limit_usd
+        if ceiling_usd is not None:
+            limit = min(limit, ceiling_usd)
+        if spent + worst > limit:
             raise BudgetExceededError(
-                f"spent ${spent:.4f} of ${self.config.total_limit_usd}; "
-                f"the next call could cost up to ${worst:.4f}"
+                f"spent ${spent:.4f} of ${limit}; the next call could cost up to ${worst:.4f}"
             )
         return worst
 

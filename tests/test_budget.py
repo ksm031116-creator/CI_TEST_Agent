@@ -20,6 +20,7 @@ PRICE = ModelPrice(Decimal("4"), Decimal("20"))
 def config(limit: str) -> BudgetConfig:
     return BudgetConfig(
         model="m",
+        effort="medium",
         max_output_tokens=1000,
         total_limit_usd=Decimal(limit),
         pricing_date="2026-11-03",
