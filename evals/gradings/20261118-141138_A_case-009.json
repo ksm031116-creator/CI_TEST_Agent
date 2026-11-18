@@ -1,0 +1,23 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141138_A_case-009",
+  "case_id": "case-009",
+  "method": "A",
+  "report_sha256": "329c14e9f70bc9c08a40b2a85f3ffd168a27609db026449557e046ebccf597de",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "place_order가 max_items_per_order(50) 초과 여부를 검사하기 전에 inventory.reserve를 호출해, 기대한 \"too many\" ValueError 대신 재고 부족 OutOfStockError가 먼저 발생한다."
+  },
+  "top_candidate_key": "limit_check_after_reserve",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "unspecified"
+  ],
+  "rationale": "place_order가 상한 검사 전에 예약을 한다고 했다. 대상(상한 검사)은 맞지만 잘못을 다르게 말했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

@@ -1,0 +1,25 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141811_A_case-007",
+  "case_id": "case-007",
+  "method": "A",
+  "report_sha256": "6d3141dae99b9943f14d879268e13d1af2fd5c2b3f7e2aa5a621563c26ba0510",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "외부에서 내려받은 prices.csv에서 MILK가 taxable=True로 되어 있어, 테스트가 기대하는 면세 상품 조건과 맞지 않음"
+  },
+  "top_candidate_key": "external_data_taxable",
+  "verdict": "partial",
+  "matched_candidate": 2,
+  "partial_reasons": [
+    "not_top",
+    "unspecified",
+    "withheld"
+  ],
+  "rationale": "1순위는 외부 데이터의 과세 표시다. 2순위(낮은 확신)가 'catalog fixture 또는 로더'가 MILK를 잘못 설정했을 가능성을 들었다. 결론도 보류다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

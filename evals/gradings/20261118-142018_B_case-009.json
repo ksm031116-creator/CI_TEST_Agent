@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-142018_B_case-009",
+  "case_id": "case-009",
+  "method": "B",
+  "report_sha256": "eec7fdbe6e8e2c529c61bd5e34a1d14cf55d1aace75c076ac198f2f2aa3016e7",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "place_order의 상한 검사가 총 수량이 아니라 SKU 종류 수(len(items))를 기준으로 합니다. 그래서 수량 51인 단일 품목 주문이 검사를 통과하고 재고 예약 단계에서 OutOfStockError가 납니다."
+  },
+  "top_candidate_key": "limit_check_len_items",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "place_order의 상한 검사가 총 수량이 아닌 `len(items)`를 센다고 했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

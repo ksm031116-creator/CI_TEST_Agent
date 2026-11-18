@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141650_B_case-004",
+  "case_id": "case-004",
+  "method": "B",
+  "report_sha256": "8a6654073b119c4bee6e60db147351442f3ea818164674bc921cf489dd9cb209",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "CI가 다운로드한 공유 가격표(prices.csv)의 가격이 테스트 기대값 11660이 전제하는 가격과 다를 가능성"
+  },
+  "top_candidate_key": "external_price_data",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "보류하면서 외부 prices.csv의 가격 변경 가능성을 1순위로 들었고, 확인 방법에 데이터 파일 내려받아 단가 확인이 있다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-140805_A_case-004",
+  "case_id": "case-004",
+  "method": "A",
+  "report_sha256": "bda7b37ec7be83620762db00822cea8f4408c3e173dc248988f64551ca322489",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "외부 release 자산 prices.csv의 가격이 테스트 기대값을 만들 때 쓰인 가격과 달라졌을 가능성"
+  },
+  "top_candidate_key": "external_price_data",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "보류하면서 외부 prices.csv의 가격 변경 가능성을 1순위로 들었고, 확인 방법에 데이터 파일 내려받아 단가 확인이 있다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

@@ -1,0 +1,23 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141110_B_case-008",
+  "case_id": "case-008",
+  "method": "B",
+  "report_sha256": "9945aacd5ad67dfd8981999549f35c108709ac36fc842b74c0848c30beea75d9",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "line_subtotal의 대량 할인 조건이 수량이 임계값과 같을 때(10 == 10) 할인을 적용하지 않는다 (예: `>=` 대신 `>` 비교로 인한 경계값 오류)."
+  },
+  "top_candidate_key": "boundary_gt",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "withheld"
+  ],
+  "rationale": "line_subtotal이 경계에서 `>`로 비교한다고 맞게 추정했지만 결론이 보류다. 정답은 cause_candidate만 허용한다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}
