@@ -143,7 +143,6 @@ def _render_run(reader: BundleReader, junit: JUnitReport) -> tuple[list[str], se
         "## Run",
         f"workflow: {run.get('workflowName')}",
         f"event: {run.get('event')}",
-        f"branch: {run.get('headBranch')}",
         f"job: {job.get('name')} (conclusion: {job.get('conclusion', run.get('conclusion'))})",
         f"python: {reader.python_version or 'unknown'}",
         "steps:",

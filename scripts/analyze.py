@@ -26,7 +26,7 @@ from decimal import Decimal
 from pathlib import Path
 
 from ci_failure_analyzer.analysis.budget import UsageLedger, load_config
-from ci_failure_analyzer.analysis.context import METHOD_A, METHOD_B
+from ci_failure_analyzer.analysis.context import METHOD_A, METHOD_B, build_context
 from ci_failure_analyzer.analysis.prompt import PROMPT_VERSION, prompt_sha256
 from ci_failure_analyzer.analysis.runner import AnalysisResult, AnthropicClient, run_analysis
 from ci_failure_analyzer.inputs.bundle import bundle_sha256, file_hashes
@@ -89,17 +89,19 @@ def targets(args: argparse.Namespace) -> list[tuple[str | None, str]]:
     return pairs
 
 
-def find_existing(input_id: str, method: str, model: str, prompt_hash: str) -> Path | None:
+def find_existing(input_id: str, method: str, model: str, prompt_hash: str, context_hash: str | None) -> Path | None:
+    """A stored run of the same bundle with the same method, model, prompt and input text."""
+    wanted = (input_id, method, model, prompt_hash, context_hash)
     for manifest_path in sorted(RUNS_ROOT.glob("*/manifest.json")):
         m = read_json(manifest_path)
-        if (m.get("input_id"), m.get("method"), m.get("model"), m.get("prompt_sha256")) == (
-            input_id,
-            method,
-            model,
-            prompt_hash,
-        ):
+        found = (m.get("input_id"), m.get("method"), m.get("model"), m.get("prompt_sha256"), m.get("context_sha256"))
+        if found == wanted:
             return manifest_path.parent
     return None
+
+
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def new_run_dir(method: str, short_id: str) -> Path:
@@ -141,11 +143,14 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
     bundle = args.inputs_root / input_id
     if not (bundle / "run.json").exists():
         raise SystemExit(f"bundle not found: {bundle}")
-    existing = find_existing(input_id, method, config.model, prompt_sha256())
+    validation = validate_bundle(bundle)
+    context_hash = None
+    if validation.analyzable:
+        context_hash = sha256_text(build_context(BundleReader(bundle), validation.report, method).text)
+    existing = find_existing(input_id, method, config.model, prompt_sha256(), context_hash)
     if existing is not None and not args.rerun:
         return {"case_id": case_id, "method": method, "skipped": existing.name}
 
-    validation = validate_bundle(bundle)
     short_id = case_id or input_id.rsplit("-j", 1)[-1][-6:]
     run_dir = new_run_dir(method, short_id)
     manifest: dict = {
@@ -192,7 +197,7 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
         manifest |= {
             "status": result.status,
             "conclusion": result.report.conclusion.value if result.report else None,
-            "context_sha256": hashlib.sha256(context.text.encode("utf-8")).hexdigest(),
+            "context_sha256": sha256_text(context.text),
             "context_characters": len(context.text),
             "log_lines": [context.log_lines_included, context.log_lines_total],
             "selected_files": [[f.path, f.reason] for f in context.selected_files],
