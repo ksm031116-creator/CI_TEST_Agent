@@ -2,10 +2,13 @@
 
 Usage:
   uv run python scripts/evaluate.py --split dev > outputs/<name>.md
+  uv run python scripts/evaluate.py --split dev --format json > <path>.json
   uv run python scripts/evaluate.py --split dev --write-stubs
 
 Reads work/runs/ (current model and prompt only), evals/labels/ and
-evals/gradings/. Makes no model call. Code decides the conclusion type, the
+evals/gradings/. Makes no model call. Without --methods, every method that has
+a run of the split is compared. Cost, tokens and duration come from the run
+manifests. Code decides the conclusion type, the
 location and the checks; whether a report names the labelled cause comes from
 the grading records (docs/grading_spec.md). --write-stubs creates an empty
 record for every run that needs one and has none.
@@ -17,7 +20,7 @@ import argparse
 import hashlib
 import json
 import sys
-from collections import Counter
+from dataclasses import asdict
 from pathlib import Path
 
 from ci_failure_analyzer.analysis.budget import load_config
@@ -32,6 +35,7 @@ from ci_failure_analyzer.evaluation.grading import (
     score_run,
     top_candidate_index,
 )
+from ci_failure_analyzer.evaluation.summary import UNGRADED, case_summary, cost_summary, match_counts, method_summary
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNS_ROOT = ROOT / "work" / "runs"
@@ -94,24 +98,46 @@ def joined(values: list[str]) -> str:
     return " / ".join(values)
 
 
-def print_method_summary(scores: list[RunScore], methods: list[str]) -> None:
+def print_method_summary(summaries: dict[str, dict]) -> None:
     print("| 방식 | 실행 | 일치 | 부분 | 불일치 | 미채점 | 맞는 추정+보류 | high 오답 | 결론 유형 허용 | 위치: 줄 / 파일 / 다른 파일 / 없음 | 첫 응답 검사 통과 | 사람 검토 |")
     print("|---|---|---|---|---|---|---|---|---|---|---|---|")
-    for method in methods:
-        rows = [s for s in scores if s.method == method]
-        verdicts = Counter(s.verdict for s in rows)
-        located = [s for s in rows if s.location != "n/a"]
-        location = Counter(s.location for s in located)
-        called = [s for s in rows if s.first_reply_passed is not None]
-        judged = [s for s in rows if s.verdict_source in ("grader", "reviewed")]
+    for method, m in summaries.items():
+        verdicts, location = m["verdicts"], m["location"]
         print(
-            f"| {method} | {len(rows)} | {verdicts[MATCH]} | {verdicts[PARTIAL]} | {verdicts[MISMATCH]} | {verdicts[None]} "
-            f"| {sum(s.withheld for s in rows)} | {sum(bool(s.wrong_high) for s in rows)} "
-            f"| {sum(s.conclusion_allowed for s in rows)}/{len(rows)} "
-            f"| {location['line']} / {location['file']} / {location['other']} / {location['none']} (대상 {len(located)}) "
-            f"| {sum(bool(s.first_reply_passed) for s in called)}/{len(called)} "
-            f"| {sum(s.reviewed for s in judged)}/{len(judged)} |"
+            f"| {method} | {m['runs']} | {verdicts[MATCH]} | {verdicts[PARTIAL]} | {verdicts[MISMATCH]} | {verdicts[UNGRADED]} "
+            f"| {m['correct_but_withheld']} | {m['wrong_high_confidence']} "
+            f"| {m['conclusion_allowed']}/{m['runs']} "
+            f"| {location['line']} / {location['file']} / {location['other']} / {location['none']} (대상 {location['applicable']}) "
+            f"| {m['first_reply_passed']['passed']}/{m['first_reply_passed']['called']} "
+            f"| {m['reviewed']['reviewed']}/{m['reviewed']['judged']} |"
         )
+
+
+def _money(value: str | None) -> str:
+    return "-" if value is None else f"{float(value):.4f}"
+
+
+def _plain(value: float | None) -> str:
+    return "-" if value is None else str(value)
+
+
+def print_cost_summary(costs: dict[str, dict]) -> None:
+    print("| 방식 | 호출한 실행 | 모델 호출 | 도구 호출 | 입력 토큰 | 출력 토큰 | 비용($) | 실행당 비용($) | 실행당 최대($) | 소요 시간 중앙값(초) | 최대(초) |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|")
+    for method, c in costs.items():
+        print(
+            f"| {method} | {c['runs_with_calls']} | {c['model_calls']} | {c['tool_calls']} | {c['input_tokens']} | {c['output_tokens']} "
+            f"| {_money(c['cost_usd'])} | {_money(c['cost_usd_per_run'])} | {_money(c['max_cost_usd'])} "
+            f"| {_plain(c['median_duration_seconds'])} | {_plain(c['max_duration_seconds'])} |"
+        )
+
+
+def print_comparison(counts: dict[str, dict[str, dict | None]], case_types: dict[str, str], methods: list[str]) -> None:
+    print("| 사례 | 유형 | " + " | ".join(methods) + " |")
+    print("|---|---|" + "---|" * len(methods))
+    for case_id, by_method in counts.items():
+        cells = ["-" if by_method[m] is None else f"{by_method[m]['match']}/{by_method[m]['runs']}" for m in methods]
+        print(f"| {case_id} | {case_types[case_id]} | " + " | ".join(cells) + " |")
 
 
 def print_case_table(scores: list[RunScore], case_types: dict[str, str], methods: list[str]) -> None:
@@ -133,26 +159,21 @@ def print_case_table(scores: list[RunScore], case_types: dict[str, str], methods
             )
 
 
-def print_case_summary(scores: list[RunScore], case_ids: list[str], methods: list[str]) -> None:
+def print_case_summary(summaries: dict[str, dict]) -> None:
     print("| 방식 | 사례 | 모든 실행이 일치 | 일치가 과반 | 판정이 실행마다 같음 | 결론 유형이 실행마다 같음 | 1순위 후보가 실행마다 같음 |")
     print("|---|---|---|---|---|---|---|")
-    for method in methods:
-        groups = [[s for s in scores if s.case_id == case_id and s.method == method] for case_id in case_ids]
-        groups = [g for g in groups if g]
-        keyed = [g for g in groups if any(s.top_candidate_key for s in g)]
+    for method, c in summaries.items():
         print(
-            f"| {method} | {len(groups)} | {sum(all(s.verdict == MATCH for s in g) for g in groups)} "
-            f"| {sum(2 * sum(s.verdict == MATCH for s in g) > len(g) for g in groups)} "
-            f"| {sum(len({s.verdict for s in g}) == 1 for g in groups)} "
-            f"| {sum(len({s.conclusion for s in g}) == 1 for g in groups)} "
-            f"| {sum(len({s.top_candidate_key for s in g}) == 1 for g in keyed)}/{len(keyed)} |"
+            f"| {method} | {c['cases']} | {c['all_runs_match']} | {c['majority_match']} | {c['same_verdict']} "
+            f"| {c['same_conclusion']} | {c['same_top_candidate']}/{c['cases_with_top_candidate']} |"
         )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--split", default="dev")
-    parser.add_argument("--methods", nargs="+", default=["A", "B"])
+    parser.add_argument("--methods", nargs="+", help="default: every method with a run of the split")
+    parser.add_argument("--format", choices=["md", "json"], default="md")
     parser.add_argument("--write-stubs", action="store_true", help="create empty grading records for ungraded runs")
     parser.add_argument("--allow-holdout", action="store_true", help="only for the final evaluation")
     args = parser.parse_args()
@@ -167,12 +188,16 @@ def main() -> int:
     labels = {c: read_json(ROOT / "evals" / "labels" / f"{c}.json") for c in case_ids}
     runs = load_runs(case_ids, config.model, prompt_hash)
 
+    methods = args.methods or sorted({m["method"] for case_runs in runs.values() for m, _, _ in case_runs})
+
     scores: list[RunScore] = []
+    manifests: dict[str, dict] = {}
     created = 0
     for case_id in case_ids:
         for manifest, report, report_hash in runs[case_id]:
-            if manifest["method"] not in args.methods:
+            if manifest["method"] not in methods:
                 continue
+            manifests[manifest["run_id"]] = manifest
             grading_path = GRADINGS_ROOT / f"{manifest['run_id']}.json"
             grading = read_json(grading_path) if grading_path.exists() else None
             if args.write_stubs and grading is None and automatic_verdict(report, labels[case_id]) is None:
@@ -184,22 +209,55 @@ def main() -> int:
         print(f"created {created} grading stubs in {GRADINGS_ROOT.relative_to(ROOT).as_posix()}")
         return 0
 
+    by_method = {m: [s for s in scores if s.method == m] for m in methods}
+    run_summaries = {m: method_summary(rows) for m, rows in by_method.items()}
+    case_summaries = {
+        m: case_summary([[s for s in rows if s.case_id == case_id] for case_id in case_ids]) for m, rows in by_method.items()
+    }
+    costs = {m: cost_summary([manifests[s.run_id] for s in rows]) for m, rows in by_method.items()}
+    counts = match_counts(scores, case_ids, methods)
+    problems = [(s.run_id, p) for s in scores for p in s.problems]
+
+    if args.format == "json":
+        result = {
+            "model": config.model,
+            "effort": config.effort,
+            "prompt_version": PROMPT_VERSION,
+            "prompt_sha256": prompt_hash,
+            "grading_spec_version": SPEC_VERSION,
+            "split": args.split,
+            "methods": {m: {"runs": run_summaries[m], "cases": case_summaries[m], "cost": costs[m]} for m in methods},
+            "match_by_case": counts,
+            "runs": [asdict(s) | {"cost_usd": manifests[s.run_id].get("cost_usd")} for s in scores],
+        }
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 1 if problems else 0
+
     print(f"모델 `{config.model}` · effort `{config.effort}` · 프롬프트 `{PROMPT_VERSION}` (`{prompt_hash[:12]}`) · 분할 `{args.split}` · 실행 {len(scores)}건")
     print()
     print("**방식별 집계 (실행 단위)**")
     print()
-    print_method_summary(scores, args.methods)
+    print_method_summary(run_summaries)
     print()
     print("**방식별 집계 (사례 단위)**")
     print()
-    print_case_summary(scores, case_ids, args.methods)
+    print_case_summary(case_summaries)
+    print()
+    print("**방식별 비용과 소요 시간**")
+    print()
+    print_cost_summary(costs)
+    print()
+    print("- 평균과 중앙값은 모델을 호출한 실행만 센다. 비용은 실행 기록의 값이고, 사용량 장부와 같은 요금표로 계산한 것이다.")
+    print()
+    print("**사례별 일치 수 (일치한 실행 / 실행)**")
+    print()
+    print_comparison(counts, case_types, methods)
     print()
     print("**사례별 결과**")
     print()
-    print_case_table(scores, case_types, args.methods)
+    print_case_table(scores, case_types, methods)
     print()
     print("- 판정 뒤의 `*`는 사람이 검토한 판정이다. 표시가 없으면 1차 채점자의 판정이거나 코드가 정한 판정이다.")
-    problems = [(s.run_id, p) for s in scores for p in s.problems]
     if problems:
         print()
         print("**쓸 수 없는 채점 기록**")
