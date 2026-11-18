@@ -29,7 +29,7 @@ def config(limit: str) -> BudgetConfig:
 
 def test_repository_config_sets_the_agreed_limit_and_model():
     loaded = load_config(REPO_CONFIG)
-    assert loaded.total_limit_usd == Decimal("100")
+    assert loaded.total_limit_usd == Decimal("85")
     assert loaded.model in loaded.prices
 
 
@@ -88,7 +88,7 @@ def test_model_without_a_price_is_refused(tmp_path):
 
 
 def test_non_positive_limit_is_rejected(tmp_path):
-    text = REPO_CONFIG.read_text(encoding="utf-8").replace("total_limit_usd = 100", "total_limit_usd = 0")
+    text = REPO_CONFIG.read_text(encoding="utf-8").replace("total_limit_usd = 85", "total_limit_usd = 0")
     path = tmp_path / "analysis.toml"
     path.write_text(text, encoding="utf-8")
     with pytest.raises(ValueError):
