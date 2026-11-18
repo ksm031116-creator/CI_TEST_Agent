@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-140633_A_case-002",
+  "case_id": "case-002",
+  "method": "A",
+  "report_sha256": "a934ff4a5edbaab338ff44778388e23467958a996056cbe35ed3f1f96f533117",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "테스트의 기대값과 config fixture의 대량 할인 기준(bulk_discount_threshold=20)이 서로 맞지 않는다."
+  },
+  "top_candidate_key": "threshold_20_neutral",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "config의 기준 수량 20이 테스트의 전제(10)와 맞지 않아 할인이 빠졌다고 했다. 위치를 적지 않았고 config 값이 바뀌었을 가능성을 들었다. 경계 판정이다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

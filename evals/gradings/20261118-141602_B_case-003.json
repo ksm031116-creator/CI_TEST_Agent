@@ -1,0 +1,24 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141602_B_case-003",
+  "case_id": "case-003",
+  "method": "B",
+  "report_sha256": "6518ffb7f9814609b0a5073bfe64906cb09cfa7058a0ccacd008576ef9311152",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "place_order가 OutOfStockError로 실패할 때 앞서 예약한 APPLE 수량을 되돌리지 못합니다. 되돌리는 처리가 오히려 예약을 한 번 더 하는 쪽으로 동작했을 가능성이 있습니다."
+  },
+  "top_candidate_key": "rollback_missing_or_rereserve",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "unspecified",
+    "withheld"
+  ],
+  "rationale": "되돌리는 처리가 예약을 한 번 더 하는 쪽으로 동작했을 가능성을 들었고, 추론에 'release가 부호를 반대로 적용'이 대안 중 하나로 있다. 특정하지는 못했고 결론도 보류다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

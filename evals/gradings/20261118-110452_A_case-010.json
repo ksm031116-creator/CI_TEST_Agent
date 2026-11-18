@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-110452_A_case-010",
+  "case_id": "case-010",
+  "method": "A",
+  "report_sha256": "8cd736ecc1ecb9d0b582c9fbb1b40e6f595494f1644074be2c9e35a3cdfcc3b3",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "외부 릴리스에서 내려받은 tests/data/prices.csv의 taxable 값이 테스트가 기대하는 값(BREAD, APPLE 과세)과 다르다"
+  },
+  "top_candidate_key": "external_data_taxable",
+  "verdict": "mismatch",
+  "matched_candidate": null,
+  "partial_reasons": [],
+  "rationale": "1순위는 외부 데이터의 과세 표시, 2순위는 로더나 fixture의 해석 오류다. Product의 기본값을 든 후보가 없다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

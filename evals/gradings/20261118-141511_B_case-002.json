@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141511_B_case-002",
+  "case_id": "case-002",
+  "method": "B",
+  "report_sha256": "838b334dd075ba1e3713fc5c108a372d26a932542c8192b978efc72833e582af",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "테스트는 대량 할인 기준 수량을 10으로 가정하지만, DEFAULT_CONFIG의 bulk_discount_threshold는 20입니다. 그래서 수량 10에는 할인이 적용되지 않았습니다."
+  },
+  "top_candidate_key": "config_default_threshold_20",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "DEFAULT_CONFIG의 기준 수량이 20이라 10개 주문에 할인이 없다고 했다. 위치는 없지만 대상(설정 기본값)과 잘못(값 20)이 정답과 같다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

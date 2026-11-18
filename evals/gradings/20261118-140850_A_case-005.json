@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-140850_A_case-005",
+  "case_id": "case-005",
+  "method": "A",
+  "report_sha256": "e29ba0100b5f830ddf7355d0447d00d25b8850f663ea7f8cb9f789a2ce0ae149",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "loader.py 20행에서 컬럼명 'taxable' 을 'taxble' 로 잘못 적은 오타"
+  },
+  "top_candidate_key": "column_name_typo",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "loader.py 20행의 컬럼 이름 오타(`taxble`)를 지목했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

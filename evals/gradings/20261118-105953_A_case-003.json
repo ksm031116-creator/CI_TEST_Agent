@@ -1,0 +1,25 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-105953_A_case-003",
+  "case_id": "case-003",
+  "method": "A",
+  "report_sha256": "a475ddca698877deeacbea09f7df822630f3886b9201fdb7ae1d5798e98b4be3",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "place_order가 OutOfStockError로 실패할 때, 그 전에 잡아 둔 재고 예약(APPLE)을 해제하지 않는다."
+  },
+  "top_candidate_key": "rollback_missing",
+  "verdict": "partial",
+  "matched_candidate": 2,
+  "partial_reasons": [
+    "not_top",
+    "unspecified",
+    "withheld"
+  ],
+  "rationale": "1순위는 정답이 오답으로 정한 롤백 누락이다. 2순위(낮은 확신)가 Inventory의 해제·계산 구현 오류를 영역 수준으로 들었다. 결론도 보류다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141832_B_case-007",
+  "case_id": "case-007",
+  "method": "B",
+  "report_sha256": "d9d626b94cc52e175a77eaa286ee0ba5666eef9f5797bd5eff36272398c22320",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "conftest.py의 catalog fixture가 MILK를 면세 상품으로 만들지 않아(taxable 미지정으로 기본값 True 적용) 세금이 부과됨"
+  },
+  "top_candidate_key": "fixture_milk_not_exempt",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "conftest.py의 catalog fixture가 MILK를 면세로 지정하지 않았다고 했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

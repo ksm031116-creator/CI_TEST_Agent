@@ -1,0 +1,23 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-142111_B_case-010",
+  "case_id": "case-010",
+  "method": "B",
+  "report_sha256": "6789d54a7e48890fc916ab0e4853f533bb7103a93be4dad4f5e0a8705c417ba2",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "Product를 taxable 인자 없이 만들면 taxable=False가 된다. Product의 taxable 기본값이 False로 바뀌었거나, Catalog가 이 값을 덮어쓰는 것으로 보인다."
+  },
+  "top_candidate_key": "product_default_or_catalog",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "unspecified"
+  ],
+  "rationale": "Product의 기본값이 False로 바뀌었거나 Catalog가 값을 덮어쓴다고 했다. 앞쪽이 정답이지만 서로 다른 대상을 또는으로 묶었다. 경계 판정이다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

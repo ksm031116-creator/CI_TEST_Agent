@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-140722_A_case-003",
+  "case_id": "case-003",
+  "method": "A",
+  "report_sha256": "12d3f8fa8d2196ca719574e835ba5c63ed698d6ef27550093c603ac38da57a90",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "place_order가 주문 도중 OutOfStockError로 실패했을 때, 그 전에 잡아 둔 재고 예약(APPLE)을 해제(롤백)하지 않는다."
+  },
+  "top_candidate_key": "rollback_missing",
+  "verdict": "mismatch",
+  "matched_candidate": null,
+  "partial_reasons": [],
+  "rationale": "후보가 롤백 누락 하나뿐이고, 정답이 오답으로 정한 설명이다. 추론에서 중복 예약을 언급했지만 release의 잘못으로 잇지 않았다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

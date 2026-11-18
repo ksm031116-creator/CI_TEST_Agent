@@ -1,0 +1,23 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-110514_B_case-010",
+  "case_id": "case-010",
+  "method": "B",
+  "report_sha256": "23b00d18275b41fe04dc8b03fb71983be3bb76d0979ef2ac8ac7cc003fed3c57",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "shopcalc.catalog.Product의 taxable 필드 기본값이 False이거나, Catalog가 생성 시 taxable을 False로 바꾸고 있습니다. 그 결과 taxable을 명시하지 않은 상품에 세금이 붙지 않습니다."
+  },
+  "top_candidate_key": "product_default_or_catalog",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "unspecified"
+  ],
+  "rationale": "Product의 taxable 기본값이 False이거나 Catalog가 값을 바꾼다고 했다. 앞쪽이 정답이지만 서로 다른 대상을 또는으로 묶었다. 경계 판정이다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

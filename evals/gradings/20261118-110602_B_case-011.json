@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-110602_B_case-011",
+  "case_id": "case-011",
+  "method": "B",
+  "report_sha256": "848924b53185d9d7aa6e9e525984af900fce3a111e661999878428012bc2b8ba",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "외부 release 'test-data'에서 내려받은 prices.csv에 SKU 'B200'이 없다. 데이터가 변경되었거나 다른 버전일 가능성이 있다."
+  },
+  "top_candidate_key": "external_data_missing_b200",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "보류하면서 내려받은 prices.csv에 B200이 없을 가능성을 1순위로 들었고, 확인 방법에 데이터 파일 확인이 있다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

@@ -1,0 +1,23 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-105901_A_case-002",
+  "case_id": "case-002",
+  "method": "A",
+  "report_sha256": "9f958c38b9861cbfc2a3b5c2dd7fbed30475708017ac8f2982004f9a75431921",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "테스트가 쓰는 수량(10)이 config 의 대량 할인 기준(bulk_discount_threshold=20)보다 작다. 그래서 할인이 적용되지 않았다."
+  },
+  "top_candidate_key": "threshold_20_test_side",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "wrong_side"
+  ],
+  "rationale": "기준 수량이 20이라 할인이 빠졌다는 사실은 짚었다. 추론은 어느 쪽 잘못인지 판단을 미뤘지만 위치를 테스트 파일로 적었다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

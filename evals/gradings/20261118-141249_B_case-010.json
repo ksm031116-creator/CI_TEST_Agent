@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-141249_B_case-010",
+  "case_id": "case-010",
+  "method": "B",
+  "report_sha256": "b4241ec6b44949f7e302bf62c8bb031de8a0b4c2e7b458ab5f033561054e563d",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "Product의 taxable 필드 기본값이 False로 되어 있어, taxable을 지정하지 않은 상품이 모두 비과세로 처리됨"
+  },
+  "top_candidate_key": "product_default_false",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "Product의 taxable 기본값이 False라고 했다. 위치는 없지만 대상과 잘못이 정답과 같다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

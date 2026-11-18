@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-140934_B_case-006",
+  "case_id": "case-006",
+  "method": "B",
+  "report_sha256": "e057ee86741026ff3d3482330e32b0fb292f35e69dff1b1e6181c37673314c8b",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "Inventory.commit에서 속성 이름 오타: self._on_hand 대신 존재하지 않는 self._onhand를 사용함"
+  },
+  "top_candidate_key": "attribute_name_typo",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "Inventory.commit의 속성 이름 오타(`_onhand`)를 지목했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}

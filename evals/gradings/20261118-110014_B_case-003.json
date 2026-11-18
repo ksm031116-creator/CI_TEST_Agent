@@ -1,0 +1,24 @@
+{
+  "spec_version": "1",
+  "run_id": "20261118-110014_B_case-003",
+  "case_id": "case-003",
+  "method": "B",
+  "report_sha256": "261dcb2cc761f918dec10465ecb689fe414ab36499a1037204d0751a39831806",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "place_order가 OutOfStockError 발생 시 이미 걸어 둔 APPLE 예약을 해제(롤백)하지 않거나 잘못 처리하는 것으로 보입니다."
+  },
+  "top_candidate_key": "rollback_missing_or_rereserve",
+  "verdict": "partial",
+  "matched_candidate": 1,
+  "partial_reasons": [
+    "unspecified",
+    "withheld"
+  ],
+  "rationale": "요약은 롤백 누락 또는 잘못된 처리이고, 추론에서 해제 경로가 release 대신 reserve를 부를 가능성을 들었다. 롤백이 예약을 늘린다는 점은 정답과 같지만 대상을 Inventory.release로 특정하지 못했고 결론도 보류다. 경계 판정이다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-18",
+  "review": null
+}
