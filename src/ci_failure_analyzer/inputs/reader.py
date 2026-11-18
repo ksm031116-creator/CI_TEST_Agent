@@ -16,6 +16,9 @@ from ci_failure_analyzer.inputs.bundle import CODE_TAR, JOB_LOG, JUNIT_XML, RUN_
 
 PYTHON_VERSION = "reports/python_version.txt"
 
+# Shown in place of the head branch name; see `BundleReader._mask_branch`.
+BRANCH_PLACEHOLDER = "<branch>"
+
 # Files larger than this are listed but not readable as text.
 MAX_CODE_FILE_BYTES = 1_000_000
 
@@ -54,6 +57,25 @@ class BundleReader:
         return json.loads((self.bundle_dir / RUN_JSON).read_text(encoding="utf-8"))
 
     @cached_property
+    def _branch_pattern(self) -> re.Pattern[str] | None:
+        branch = self.run.get("headBranch") if (self.bundle_dir / RUN_JSON).exists() else None
+        if not branch:
+            return None
+        # Match the name as a whole ref (also after `origin/` or `refs/heads/`),
+        # not inside another word or path such as `__main__` or `main.py`.
+        return re.compile(rf"(?<![\w.-]){re.escape(branch)}(?![\w/.-])")
+
+    def _mask_branch(self, text: str) -> str:
+        """Replace the head branch name with a placeholder.
+
+        A branch name describes what the author was changing, which the analysis
+        is supposed to work out from the failure itself. Evaluation branches are
+        named after the planted defect, so leaving the name in would leak the answer.
+        """
+        pattern = self._branch_pattern
+        return text if pattern is None else pattern.sub(BRANCH_PLACEHOLDER, text)
+
+    @cached_property
     def python_version(self) -> str | None:
         path = self.bundle_dir / PYTHON_VERSION
         return path.read_text(encoding="utf-8").strip() if path.exists() else None
@@ -85,7 +107,8 @@ class BundleReader:
         path = self.bundle_dir / JOB_LOG
         if not path.exists():
             return None
-        return [clean_log_line(line) for line in split_lines(path.read_text(encoding="utf-8", errors="replace"))]
+        cleaned = (clean_log_line(line) for line in split_lines(path.read_text(encoding="utf-8", errors="replace")))
+        return [(step, self._mask_branch(content)) for step, content in cleaned]
 
     @cached_property
     def log_steps(self) -> list[str]:
@@ -95,7 +118,8 @@ class BundleReader:
     def lines(self, path: str) -> list[str] | None:
         """Lines of `job.log`, `reports/junit.xml` or a file in the code snapshot.
 
-        Log lines are returned cleaned (see `clean_log_line`). Returns None when
+        Log lines are returned cleaned (see `clean_log_line`) and with the head
+        branch name replaced by a placeholder. Returns None when
         the bundle has no such file or it is not readable text.
         """
         if path == JOB_LOG:

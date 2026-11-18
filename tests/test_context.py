@@ -175,3 +175,51 @@ def test_line_numbers_in_context_match_the_citation_checker(reader, junit):
         }
     )
     assert check_citations(report, reader, context.provided_code_paths) == []
+
+
+BRANCH_LOG = (
+    "pytest\tCheckout\t * [new ref] abc -> origin/case/x\n"
+    "pytest\tCheckout\tSwitched to a new branch 'case/x'\n"
+    "pytest\tRun tests\ttests/case/x/test_a.py::test_one FAILED\n"
+    "pytest\tRun tests\tcase/x-ray and showcase/x are other names\n"
+)
+
+
+def test_branch_name_is_masked_in_log_lines_but_not_inside_other_names(make_bundle):
+    reader = BundleReader(make_bundle(BRANCH_LOG, CODE, junit=JUNIT))
+    assert reader.lines("job.log") == [
+        " * [new ref] abc -> origin/<branch>",
+        "Switched to a new branch '<branch>'",
+        "tests/case/x/test_a.py::test_one FAILED",
+        "case/x-ray and showcase/x are other names",
+    ]
+
+
+def test_context_does_not_contain_the_branch_name(make_bundle, junit):
+    reader = BundleReader(make_bundle(BRANCH_LOG, CODE, junit=JUNIT))
+    text = build_context(reader, junit, METHOD_B).text
+    assert "branch: " not in text
+    assert "origin/case/x" not in text and "'case/x'" not in text
+
+
+def test_quote_of_a_masked_line_passes_the_citation_check(make_bundle):
+    reader = BundleReader(make_bundle(BRANCH_LOG, CODE, junit=JUNIT))
+    report = parse_report(
+        {
+            "conclusion": "cause_candidate",
+            "observed_facts": [{"statement": "s", "evidence_ids": ["E1"]}],
+            "cause_candidates": [{"summary": "s", "reasoning": "r", "confidence": "low", "evidence_ids": ["E1"]}],
+            "evidence": [
+                {
+                    "id": "E1",
+                    "source": "log",
+                    "path": "job.log",
+                    "start_line": 2,
+                    "end_line": 2,
+                    "quote": "Switched to a new branch '<branch>'",
+                }
+            ],
+            "verification_steps": [{"description": "d"}],
+        }
+    )
+    assert check_citations(report, reader) == []
