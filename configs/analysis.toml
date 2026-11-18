@@ -1,6 +1,9 @@
 # Settings shared by every analysis method. Changing the model invalidates
 # comparison with earlier results; see docs/analysis_methods.md.
 model = "claude-opus-5-5"
+# Reasoning effort sent with every call. The model's default, written out so runs are comparable.
+effort = "medium"
+# Upper bound on output per call, including the model's reasoning tokens.
 max_output_tokens = 8000
 
 [budget]
