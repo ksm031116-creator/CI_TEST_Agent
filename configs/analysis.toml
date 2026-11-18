@@ -5,8 +5,9 @@ max_output_tokens = 8000
 
 [budget]
 # Hard limit on total API spending for this project, in US dollars.
-# Set by the project owner on 2026-11-19. Enforced by analysis/budget.py.
-total_limit_usd = 100
+# Set by the project owner (100 on 2026-11-19, lowered to 85 on 2026-11-20).
+# Enforced by analysis/budget.py.
+total_limit_usd = 85
 
 [pricing]
 # Anthropic API list prices, US dollars per million tokens.
