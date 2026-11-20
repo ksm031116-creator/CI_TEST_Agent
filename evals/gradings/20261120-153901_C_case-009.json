@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-153901_C_case-009",
+  "case_id": "case-009",
+  "method": "C",
+  "report_sha256": "80a500aeb6a9741299bbdec1a88414ca703c89866d7fbb7269b836e33ea8a102",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "place_order의 최대 수량 검사가 전체 수량 합계가 아니라 len(items), 즉 SKU 종류 수를 비교합니다. 그래서 {\"MILK\": 51}이 검사를 통과하고 재고 예약 단계에서 OutOfStockError가 납니다."
+  },
+  "top_candidate_key": "limit_check_len_items",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "place_order의 상한 검사가 수량 합계가 아니라 `len(items)`를 센다고 했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}

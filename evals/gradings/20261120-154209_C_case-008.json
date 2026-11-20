@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-154209_C_case-008",
+  "case_id": "case-008",
+  "method": "C",
+  "report_sha256": "0df09342bc1a15731f8480d18525e9f52d9cf6841ec39e9c3e5a6d80117c0d75",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "line_subtotal의 대량 할인 조건이 `>`로 되어 있어, 수량이 임계값(10)과 같을 때는 할인이 적용되지 않습니다(off-by-one)."
+  },
+  "top_candidate_key": "boundary_gt",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "line_subtotal의 할인 조건이 `>`라서 기준 수량과 같을 때 할인이 빠진다고 했고 결론도 cause_candidate다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}

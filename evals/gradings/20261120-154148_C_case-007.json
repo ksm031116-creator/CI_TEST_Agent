@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-154148_C_case-007",
+  "case_id": "case-007",
+  "method": "C",
+  "report_sha256": "f92222097123ec77b3f6d24e6da0b910b086b1a1f019db83fdc758762cb585ae",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "conftest.py의 catalog fixture가 MILK 상품을 만들 때 taxable=False를 넘기지 않습니다. 그래서 기본값 True가 적용되어 MILK가 과세 상품으로 취급됩니다."
+  },
+  "top_candidate_key": "fixture_milk_not_exempt",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "conftest.py의 catalog fixture가 MILK에 taxable=False를 주지 않았다고 했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}

@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-153940_C_case-001",
+  "case_id": "case-001",
+  "method": "C",
+  "report_sha256": "15e92ea0cfce127434f53d81b0011622af2b6055ea36708a8aa7bb688e8e2384",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "Catalog.add의 가격 검증이 `<= 0`으로 되어 있어서 음수뿐 아니라 가격 0인 무료 상품까지 거부됩니다."
+  },
+  "top_candidate_key": "price_check_le_zero",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "Catalog.add의 가격 검증이 `<= 0`이라 가격 0인 상품까지 거부한다고 했다. 대상과 잘못이 정답과 같다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}

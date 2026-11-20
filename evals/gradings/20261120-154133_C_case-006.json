@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-154133_C_case-006",
+  "case_id": "case-006",
+  "method": "C",
+  "report_sha256": "8b54fa1f4e79bc34e4f2e38238d4a4ed27c3cf6314e55114f530db651bb3cf08",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "Inventory.commit에서 속성 이름을 `_on_hand` 대신 `_onhand`로 잘못 적었습니다."
+  },
+  "top_candidate_key": "attribute_name_typo",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "Inventory.commit이 `_on_hand` 대신 없는 속성 `_onhand`를 쓴다고 했다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}
