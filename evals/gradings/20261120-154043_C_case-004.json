@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-154043_C_case-004",
+  "case_id": "case-004",
+  "method": "C",
+  "report_sha256": "6e10ed8363680de4e4ea4df93371d5b3729260aff716459913a7a91cb2b2c7db",
+  "conclusion": "insufficient_evidence",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "medium",
+    "summary": "CI가 내려받은 외부 데이터 tests/data/prices.csv의 단가가 테스트의 기준값 11660이 전제한 단가와 다르다. 특히 B200 단가가 3800으로 들어 있을 가능성이 크다."
+  },
+  "top_candidate_key": "external_price_data",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "보류하면서 내려받은 prices.csv의 B200 단가가 달라졌을 가능성을 1순위로 들었고, 확인 방법에 릴리스 파일을 내려받아 단가를 확인하는 단계가 있다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}

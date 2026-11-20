@@ -1,0 +1,21 @@
+{
+  "spec_version": "1",
+  "run_id": "20261120-154023_C_case-003",
+  "case_id": "case-003",
+  "method": "C",
+  "report_sha256": "005638787be92f7062ec7cf910f109b591d33461cb8fe34ad1014290869ecbff",
+  "conclusion": "cause_candidate",
+  "top_candidate": {
+    "index": 1,
+    "confidence": "high",
+    "summary": "Inventory.release가 예약 수량을 줄이지 않고 오히려 늘립니다(`+ quantity`). 그래서 주문이 실패해 롤백할 때 APPLE 예약이 풀리지 않고 두 배가 됩니다."
+  },
+  "top_candidate_key": "release_sign_error",
+  "verdict": "match",
+  "matched_candidate": 1,
+  "partial_reasons": [],
+  "rationale": "Inventory.release가 `+ quantity`로 예약을 늘린다고 했다. 정답의 부호 오류와 같다.",
+  "grader": "claude (1차 채점, 분석을 만든 쪽)",
+  "graded_on": "2026-11-23",
+  "review": null
+}
