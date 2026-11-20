@@ -275,3 +275,30 @@ def test_match_counts_leave_a_method_without_runs_empty():
         "c1": {"A": {"match": 1, "runs": 2}, "B": {"match": 1, "runs": 1}, "C": None},
         "c2": {"A": None, "B": None, "C": None},
     }
+
+
+def test_exploration_row_compares_what_was_read_with_the_labelled_cause():
+    from ci_failure_analyzer.evaluation.summary import exploration_row
+
+    manifest = {
+        "run_id": "r",
+        "case_id": "case-x",
+        "model_calls": 3,
+        "tool_call_count": 4,
+        "refused_tool_calls": 1,
+        "seen_files": {"src/a.py": [[1, 20], [40, 45]], "tests/test_a.py": [[1, 9]]},
+        "limit_reached": "tool_calls",
+        "cost_usd": "0.2",
+        "duration_seconds": 30.5,
+    }
+    row = exploration_row(manifest, {"root_cause": {"file": "src/a.py", "line": 42}})
+    assert (row["cause_file_read"], row["cause_line_read"]) == (True, True)
+    assert (row["tool_calls"], row["refused_tool_calls"], row["files_read"]) == (4, 1, 2)
+    assert row["limit_reached"] == "tool_calls"
+    row = exploration_row(manifest, {"root_cause": {"file": "src/a.py", "line": 30}})
+    assert (row["cause_file_read"], row["cause_line_read"]) == (True, False)
+    row = exploration_row(manifest, {"root_cause": {"file": "src/b.py", "line": 1}})
+    assert (row["cause_file_read"], row["cause_line_read"]) == (False, False)
+    row = exploration_row(manifest, {"root_cause": {"file": None}})
+    assert (row["cause_file_read"], row["cause_line_read"]) == (None, None)
+    assert exploration_row({"run_id": "r", "case_id": "case-x"}, {"root_cause": {}}) is None

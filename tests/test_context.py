@@ -136,7 +136,13 @@ def test_context_is_deterministic(reader, junit):
 
 def test_unknown_method_is_rejected(reader, junit):
     with pytest.raises(ValueError):
-        build_context(reader, junit, "C")
+        build_context(reader, junit, "D")
+
+
+def test_method_c_starts_from_the_text_of_method_a(reader, junit):
+    context = build_context(reader, junit, "C")
+    assert context.text == build_context(reader, junit, METHOD_A).text
+    assert context.provided_code_paths == ()
 
 
 def test_long_log_keeps_the_end_of_failed_steps(make_bundle, junit):
