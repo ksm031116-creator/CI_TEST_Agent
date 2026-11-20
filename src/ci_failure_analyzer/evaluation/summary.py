@@ -86,3 +86,33 @@ def match_counts(scores: list[RunScore], case_ids: list[str], methods: list[str]
             rows = [s for s in scores if s.case_id == case_id and s.method == method]
             table[case_id][method] = {"match": sum(s.verdict == MATCH for s in rows), "runs": len(rows)} if rows else None
     return table
+
+
+def exploration_row(manifest: dict, label: dict) -> dict | None:
+    """What a tool-using run looked at, against the labelled cause. None for a run without tools.
+
+    `cause_file_read` and `cause_line_read` say whether a tool result showed the
+    labelled file and line; both are None when the label has no code location.
+    """
+    if "seen_files" not in manifest:
+        return None
+    seen: dict[str, list[list[int]]] = manifest["seen_files"]
+    cause = label.get("root_cause") or {}
+    file, line = cause.get("file"), cause.get("line")
+    file_read = line_read = None
+    if file:
+        file_read = file in seen
+        line_read = line is not None and any(first <= line <= last for first, last in seen.get(file, []))
+    return {
+        "run_id": manifest["run_id"],
+        "case_id": manifest["case_id"],
+        "model_calls": manifest.get("model_calls") or 0,
+        "tool_calls": manifest.get("tool_call_count") or 0,
+        "refused_tool_calls": manifest.get("refused_tool_calls") or 0,
+        "files_read": len(seen),
+        "cause_file_read": file_read,
+        "cause_line_read": line_read,
+        "limit_reached": manifest.get("limit_reached"),
+        "cost_usd": manifest.get("cost_usd"),
+        "duration_seconds": manifest.get("duration_seconds"),
+    }

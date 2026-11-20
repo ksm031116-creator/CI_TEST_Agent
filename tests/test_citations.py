@@ -104,3 +104,35 @@ def test_junit_evidence_is_checked_against_the_report_file(reader):
 def test_every_broken_citation_is_reported(reader):
     report = report_with(log_evidence(quote="nope"), code_evidence(path="x.py"))
     assert codes(check_citations(report, reader)) == [("E1", QUOTE_MISMATCH), ("E2", FILE_NOT_FOUND)]
+
+
+def test_code_citation_must_be_within_lines_a_tool_showed(reader):
+    report = report_with(log_evidence(), code_evidence(start_line=2, end_line=3))
+    assert check_citations(report, reader, seen_code_lines={"src/app.py": {1, 2, 3}}) == []
+    problems = check_citations(report, reader, seen_code_lines={"src/app.py": {3}})
+    assert codes(problems) == [("E2", NOT_IN_CONTEXT)]
+    assert "lines 2 were not shown" in problems[0].detail
+
+
+def test_code_citation_of_a_file_no_tool_read_is_reported(reader):
+    report = report_with(log_evidence(), code_evidence())
+    problems = check_citations(report, reader, seen_code_lines={"tests/test_app.py": {1, 2}})
+    assert codes(problems) == [("E2", NOT_IN_CONTEXT)]
+    assert "was not read with a tool" in problems[0].detail
+
+
+def test_seen_lines_replace_the_provided_paths_check_and_leave_log_citations_alone(reader):
+    report = report_with(log_evidence(), code_evidence())
+    assert check_citations(report, reader, provided_code_paths=[], seen_code_lines={"src/app.py": {3}}) == []
+    assert check_citations(report_with(log_evidence()), reader, seen_code_lines={}) == []
+
+
+def test_missing_file_and_line_are_still_reported_as_such_with_seen_lines(reader):
+    report = report_with(log_evidence(), code_evidence(path="src/none.py"), code_evidence(id="E3", start_line=9, end_line=9))
+    problems = check_citations(report, reader, seen_code_lines={})
+    assert codes(problems) == [("E2", FILE_NOT_FOUND), ("E3", LINE_OUT_OF_RANGE)]
+
+
+def test_quote_is_still_checked_for_seen_lines(reader):
+    report = report_with(log_evidence(), code_evidence(quote="return d['y']"))
+    assert codes(check_citations(report, reader, seen_code_lines={"src/app.py": {3}})) == [("E2", QUOTE_MISMATCH)]

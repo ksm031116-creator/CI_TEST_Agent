@@ -169,8 +169,16 @@ def score_run(manifest: dict, report: dict | None, label: dict, grading: dict | 
     attempts = manifest.get("attempts") or []
     first_passed = None
     if attempts:
-        first = attempts[0]
-        first_passed = first["stop_reason"] == "end_turn" and not first["format_problems"] and not first["citation_problems"]
+        # Method C records every model call; the first reply that is not a tool
+        # request is its first report. A run that never got that far did not pass.
+        reports = [a for a in attempts if a.get("kind", "report") == "report"]
+        first = reports[0] if reports else None
+        first_passed = (
+            first is not None
+            and first["stop_reason"] == "end_turn"
+            and not first["format_problems"]
+            and not first["citation_problems"]
+        )
     verdict = automatic_verdict(report, label)
     source = "code" if verdict else "ungraded"
     problems: tuple[str, ...] = ()

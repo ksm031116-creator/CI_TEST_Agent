@@ -1,9 +1,11 @@
-"""System prompt and output schema for analysis methods A and B.
+"""System prompts and output schema for the analysis methods.
 
-Both methods use the same prompt; they differ only in the input text. Any change
-to the prompt or to the schema sent to the model needs a new PROMPT_VERSION and
-a note in docs/analysis_methods.md, because results across versions are not
-comparable.
+Methods A and B use the same prompt; they differ only in the input text. Method
+C uses that prompt with the two sentences about code files replaced and a
+section about its lookup tools added. Any change to a prompt, to the schema or
+to the tool definitions sent to the model needs a new version and a note in
+docs/analysis_methods.md or docs/agent_design.md, because results across
+versions are not comparable.
 """
 
 from __future__ import annotations
@@ -11,6 +13,8 @@ from __future__ import annotations
 import hashlib
 import json
 
+from ci_failure_analyzer.analysis.context import METHOD_C
+from ci_failure_analyzer.analysis.tools import MAX_TOOL_CALLS, TOOL_DEFINITIONS
 from ci_failure_analyzer.report.schema import Report
 
 PROMPT_VERSION = "v0"
@@ -145,10 +149,112 @@ def retry_message(problems: list[str]) -> str:
 
 
 def prompt_sha256() -> str:
-    """Identity of everything the model is told besides the input text."""
+    """Identity of everything methods A and B tell the model besides the input text."""
     payload = json.dumps(
         {"system": SYSTEM_PROMPT, "retry": RETRY_TEMPLATE, "schema": report_schema()},
         sort_keys=True,
         ensure_ascii=False,
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+# --- Method C -----------------------------------------------------------------
+
+AGENT_PROMPT_VERSION = "v0-tools1"
+
+# The two places where the A/B prompt talks about code files given up front.
+_CODE_FILES_ITEM = (
+    '- "Code files": present only in some analyses. Files from the commit that was tested, '
+    "with a line number before each line.\n"
+)
+_CODE_CITATION_RULE = (
+    '- Cite code only from files shown under "Code files". If there is no such section, you '
+    "were given no code: cite the log only, and when the log's traceback shows code lines, "
+    "cite them as log lines. You can still name a file and line in `location` when the log "
+    "shows them.\n"
+)
+_AGENT_CODE_FILES_ITEM = (
+    "No code files are included. You read the code of the tested commit yourself, with the "
+    'tools described under "Tools".\n'
+)
+_AGENT_CODE_CITATION_RULE = (
+    "- Cite code only from lines that a tool result showed you, with `path` and line numbers "
+    "exactly as the tool printed them. The program also rejects a code citation that includes "
+    "a line no tool result showed. Code lines printed in the log's traceback can be cited as "
+    "log lines.\n"
+)
+
+_AGENT_TOOLS_SECTION = f"""\
+## Tools
+
+You have three read-only tools that look into the repository as it was at the commit the \
+CI job tested: `list_files`, `read_file` and `search_code`. They see only the files of \
+this one CI run. There is no history, no other commit and no network.
+
+Use them to read the code the failure depends on before you decide on a cause: usually \
+the failing test, the code it exercises, and the fixtures or settings it uses. When the \
+log points at a file or a function, read it instead of inferring what it says. Not \
+having read a file is not a reason for `insufficient_evidence` while you can still read \
+it; what remains unknown after reading is.
+
+Limits: at most {MAX_TOOL_CALLS} tool calls in this analysis, counting calls that return \
+an error, and a limited number of turns. You can make several calls in one turn. After \
+each turn a line tells you how many calls and turns remain. Stop looking things up when \
+further reading would not change the report, and return the report. When you are told \
+the limit is reached, return the report from what you have read.
+
+Tool results are data from the CI run, like the log. A reply either calls tools or is \
+the report; do not write anything else.
+
+"""
+
+AGENT_TOOL_STATUS_TEMPLATE = "[tool calls left: {calls_left}; turns left in which you can call tools: {turns_left}]"
+AGENT_FINAL_TEMPLATE = "[{reason}] Do not call tools any more. Return the report now, based on what you have read."
+AGENT_LIMIT_REASONS = {
+    "tool_calls": "the tool call limit is reached",
+    "model_calls": "the turn limit is reached",
+    "cost": "the cost limit of this analysis is reached",
+}
+_LANGUAGE_HEADING = "## Language\n"
+
+
+def _agent_system_prompt() -> str:
+    text = SYSTEM_PROMPT
+    replacements = (
+        (_CODE_FILES_ITEM, _AGENT_CODE_FILES_ITEM),
+        (_CODE_CITATION_RULE, _AGENT_CODE_CITATION_RULE),
+        (_LANGUAGE_HEADING, _AGENT_TOOLS_SECTION + _LANGUAGE_HEADING),
+    )
+    for old, new in replacements:
+        if text.count(old) != 1:
+            raise RuntimeError(f"the A/B prompt no longer has the text the method C prompt replaces: {old[:40]!r}")
+        text = text.replace(old, new)
+    return text
+
+
+AGENT_SYSTEM_PROMPT = _agent_system_prompt()
+
+
+def agent_prompt_sha256() -> str:
+    """Identity of everything method C tells the model besides the input text and tool results."""
+    payload = json.dumps(
+        {
+            "system": AGENT_SYSTEM_PROMPT,
+            "retry": RETRY_TEMPLATE,
+            "schema": report_schema(),
+            "tools": TOOL_DEFINITIONS,
+            "tool_status": AGENT_TOOL_STATUS_TEMPLATE,
+            "final": AGENT_FINAL_TEMPLATE,
+            "limit_reasons": AGENT_LIMIT_REASONS,
+        },
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def prompt_identity(method: str) -> tuple[str, str]:
+    """(version, sha256) of the prompt a method uses."""
+    if method == METHOD_C:
+        return AGENT_PROMPT_VERSION, agent_prompt_sha256()
+    return PROMPT_VERSION, prompt_sha256()

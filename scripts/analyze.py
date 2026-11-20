@@ -1,16 +1,18 @@
-"""Analyze stored bundles with method A or B and save each run under work/runs/.
+"""Analyze stored bundles with method A, B or C and save each run under work/runs/.
 
 Usage:
   uv run python scripts/analyze.py <input_id> --method B
   uv run python scripts/analyze.py --case case-009 --method A B
   uv run python scripts/analyze.py --split dev --method A B --ceiling-usd 10
+  uv run python scripts/analyze.py --case case-009 --method C --ceiling-usd 14.9
 
 This calls the model API and costs money. The key is read from ANTHROPIC_API_KEY
 or from .env in the project root. Every call goes through the usage ledger
 (work/service_data/api_usage.jsonl), which enforces the limit in
 configs/analysis.toml. A bundle outside the analysis scope gets an out_of_scope
 report without a model call. A (bundle, method) pair that already has a run
-with the same model and prompt is skipped unless --rerun is given.
+with the same model and prompt is skipped unless --rerun is given. Method C makes
+several model calls per run within the limits of analysis/agent.py.
 """
 
 from __future__ import annotations
@@ -26,9 +28,11 @@ from decimal import Decimal
 from pathlib import Path
 
 from ci_failure_analyzer.analysis.budget import UsageLedger, load_config
-from ci_failure_analyzer.analysis.context import METHOD_A, METHOD_B, build_context
-from ci_failure_analyzer.analysis.prompt import PROMPT_VERSION, prompt_sha256
-from ci_failure_analyzer.analysis.runner import AnalysisResult, AnthropicClient, run_analysis
+from ci_failure_analyzer.analysis.agent import MAX_MODEL_CALLS, MAX_RUN_COST_USD, AgentResult, run_agent
+from ci_failure_analyzer.analysis.context import METHOD_A, METHOD_B, METHOD_C, build_context
+from ci_failure_analyzer.analysis.prompt import prompt_identity
+from ci_failure_analyzer.analysis.runner import AnalysisResult, AnthropicClient, ModelReply, run_analysis
+from ci_failure_analyzer.analysis.tools import MAX_TOOL_CALLS
 from ci_failure_analyzer.inputs.bundle import bundle_sha256, file_hashes
 from ci_failure_analyzer.inputs.reader import BundleReader
 from ci_failure_analyzer.inputs.validation import validate_bundle
@@ -115,27 +119,38 @@ def new_run_dir(method: str, short_id: str) -> Path:
     return run_dir
 
 
+def call_record(number: int, reply: ModelReply, cost: Decimal, format_problems, citation_problems, run_dir: Path) -> dict:
+    """Store one model reply and return its entry for the manifest."""
+    response_file = f"response_{number}.json"
+    write_json(run_dir / response_file, reply.raw or {"text": reply.text})
+    return {
+        "response_file": response_file,
+        "request_id": reply.request_id,
+        "stop_reason": reply.stop_reason,
+        "input_tokens": reply.input_tokens,
+        "output_tokens": reply.output_tokens,
+        "cache_write_tokens": reply.cache_write_tokens,
+        "cache_read_tokens": reply.cache_read_tokens,
+        "cost_usd": str(cost),
+        "format_problems": list(format_problems),
+        "citation_problems": list(citation_problems),
+    }
+
+
 def attempt_records(result: AnalysisResult, run_dir: Path) -> list[dict]:
-    records = []
-    for number, attempt in enumerate(result.attempts, 1):
-        reply = attempt.reply
-        response_file = f"response_{number}.json"
-        write_json(run_dir / response_file, reply.raw or {"text": reply.text})
-        records.append(
-            {
-                "response_file": response_file,
-                "request_id": reply.request_id,
-                "stop_reason": reply.stop_reason,
-                "input_tokens": reply.input_tokens,
-                "output_tokens": reply.output_tokens,
-                "cache_write_tokens": reply.cache_write_tokens,
-                "cache_read_tokens": reply.cache_read_tokens,
-                "cost_usd": str(attempt.cost_usd),
-                "format_problems": list(attempt.format_problems),
-                "citation_problems": list(attempt.citation_problems),
-            }
-        )
-    return records
+    return [
+        call_record(number, a.reply, a.cost_usd, a.format_problems, a.citation_problems, run_dir)
+        for number, a in enumerate(result.attempts, 1)
+    ]
+
+
+def agent_records(result: AgentResult, run_dir: Path) -> list[dict]:
+    """Like `attempt_records`, one entry per model call, with what kind of call it was."""
+    return [
+        call_record(number, c.reply, c.cost_usd, c.format_problems, c.citation_problems, run_dir)
+        | {"kind": c.kind, "tools_allowed": c.tools_allowed, "tool_uses": len(c.reply.tool_uses)}
+        for number, c in enumerate(result.calls, 1)
+    ]
 
 
 def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Namespace, ledger: UsageLedger) -> dict:
@@ -147,7 +162,8 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
     context_hash = None
     if validation.analyzable:
         context_hash = sha256_text(build_context(BundleReader(bundle), validation.report, method).text)
-    existing = find_existing(input_id, method, config.model, prompt_sha256(), context_hash)
+    prompt_version, prompt_hash = prompt_identity(method)
+    existing = find_existing(input_id, method, config.model, prompt_hash, context_hash)
     if existing is not None and not args.rerun:
         return {"case_id": case_id, "method": method, "skipped": existing.name}
 
@@ -164,8 +180,8 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
         "model": config.model,
         "effort": config.effort,
         "max_output_tokens": config.max_output_tokens,
-        "prompt_version": PROMPT_VERSION,
-        "prompt_sha256": prompt_sha256(),
+        "prompt_version": prompt_version,
+        "prompt_sha256": prompt_hash,
         "pricing_date": config.pricing_date,
         "started_at": datetime.now(KST).isoformat(timespec="seconds"),
     }
@@ -188,10 +204,27 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
         ceiling = None if args.ceiling_usd is None else Decimal(args.ceiling_usd)
         reader = BundleReader(bundle)
         purpose = f"analyze:{case_id or input_id}:{method}:{run_dir.name}"
-        result = run_analysis(reader, validation.report, method, args.client(), ledger, purpose, ceiling)
+        extra: dict = {}
+        if method == METHOD_C:
+            result = run_agent(reader, validation.report, args.client(), ledger, purpose, ceiling)
+            attempts = agent_records(result, run_dir)
+            extra = {
+                "limits": {
+                    "tool_calls": MAX_TOOL_CALLS,
+                    "model_calls": MAX_MODEL_CALLS,
+                    "run_cost_usd": str(MAX_RUN_COST_USD),
+                },
+                "tool_call_count": len(result.session.calls),
+                "refused_tool_calls": result.session.refused_calls,
+                "tool_calls": result.session.calls,
+                "seen_files": result.seen_files,
+                "limit_reached": result.limit_reached,
+            }
+        else:
+            result = run_analysis(reader, validation.report, method, args.client(), ledger, purpose, ceiling)
+            attempts = attempt_records(result, run_dir)
         context = result.context
         (run_dir / "context.txt").write_text(context.text, encoding="utf-8", newline="\n")
-        attempts = attempt_records(result, run_dir)
         if result.report is not None:
             write_json(run_dir / "report.json", result.report.model_dump(mode="json"))
         manifest |= {
@@ -208,7 +241,7 @@ def analyze(case_id: str | None, input_id: str, method: str, args: argparse.Name
             "input_tokens": sum(a["input_tokens"] for a in attempts),
             "output_tokens": sum(a["output_tokens"] for a in attempts),
             "cost_usd": str(result.cost_usd),
-        }
+        } | extra
     manifest["duration_seconds"] = round(time.monotonic() - started, 1)
     write_json(run_dir / "manifest.json", manifest)
     keys = ("run_id", "case_id", "method", "status", "conclusion", "model_calls", "input_tokens", "output_tokens", "cost_usd")
@@ -220,7 +253,7 @@ def main() -> int:
     parser.add_argument("input_id", nargs="*")
     parser.add_argument("--case", nargs="+", help="evaluation case ids, e.g. case-009")
     parser.add_argument("--split", help="run every case of evals/splits/<split>.json")
-    parser.add_argument("--method", nargs="+", choices=[METHOD_A, METHOD_B], default=[METHOD_B])
+    parser.add_argument("--method", nargs="+", choices=[METHOD_A, METHOD_B, METHOD_C], default=[METHOD_B])
     parser.add_argument("--inputs-root", type=Path, default=ROOT / "work" / "inputs")
     parser.add_argument("--ceiling-usd", help="stop before total recorded spending could pass this amount")
     parser.add_argument("--rerun", action="store_true", help="run again even if a matching run exists")

@@ -7,6 +7,7 @@ usage ledger before it is sent and recorded after it returns.
 
 from __future__ import annotations
 
+from collections.abc import Collection, Mapping
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any, Protocol
@@ -28,6 +29,15 @@ STATUS_REFUSED = "refused"
 
 
 @dataclass(frozen=True)
+class ToolUse:
+    """One tool call requested by the model."""
+
+    id: str
+    name: str
+    input: Any
+
+
+@dataclass(frozen=True)
 class ModelReply:
     text: str
     # Reply content in the form the API accepts back as an assistant turn.
@@ -39,6 +49,7 @@ class ModelReply:
     cache_read_tokens: int = 0
     request_id: str | None = None
     raw: dict = field(default_factory=dict)
+    tool_uses: tuple[ToolUse, ...] = ()
 
 
 class ModelClient(Protocol):
@@ -51,6 +62,8 @@ class ModelClient(Protocol):
         system: str,
         messages: list[dict],
         schema: dict,
+        tools: list[dict] | None = None,
+        tool_choice: dict | None = None,
     ) -> ModelReply: ...
 
 
@@ -71,13 +84,23 @@ class AnthropicClient:
         system: str,
         messages: list[dict],
         schema: dict,
+        tools: list[dict] | None = None,
+        tool_choice: dict | None = None,
     ) -> ModelReply:
+        # Methods A and B send no tools; the request is then exactly what it was
+        # before tools existed.
+        extra: dict[str, Any] = {}
+        if tools is not None:
+            extra["tools"] = tools
+        if tool_choice is not None:
+            extra["tool_choice"] = tool_choice
         with self._client.messages.stream(
             model=model,
             max_tokens=max_tokens,
             system=system,
             messages=messages,
             output_config={"effort": effort, "format": {"type": "json_schema", "schema": schema}},
+            **extra,
         ) as stream:
             message = stream.get_final_message()
             request_id = stream.request_id
@@ -92,6 +115,7 @@ class AnthropicClient:
             cache_read_tokens=usage.cache_read_input_tokens or 0,
             request_id=request_id,
             raw=message.to_dict(),
+            tool_uses=tuple(ToolUse(b.id, b.name, b.input) for b in message.content if b.type == "tool_use"),
         )
 
 
@@ -124,7 +148,13 @@ class AnalysisResult:
         return sum((a.cost_usd for a in self.attempts), Decimal("0"))
 
 
-def _check(reply: ModelReply, reader: BundleReader, context: AnalysisContext) -> tuple[Report | None, list[str], list[str]]:
+def check_reply(
+    reply: ModelReply,
+    reader: BundleReader,
+    provided_code_paths: Collection[str],
+    seen_code_lines: Mapping[str, Collection[int]] | None = None,
+) -> tuple[Report | None, list[str], list[str]]:
+    """Format and citation check of one reply: (report if it parsed, format problems, citation problems)."""
     try:
         report = parse_report(reply.text)
     except ReportFormatError as exc:
@@ -135,7 +165,7 @@ def _check(reply: ModelReply, reader: BundleReader, context: AnalysisContext) ->
         format_problems.append("conclusion: out_of_scope is not allowed here")
     citation_problems = [
         f"evidence {p.evidence_id}: {p.code}: {p.detail}"
-        for p in check_citations(report, reader, context.provided_code_paths)
+        for p in check_citations(report, reader, provided_code_paths, seen_code_lines)
     ]
     return report, format_problems, citation_problems
 
@@ -183,7 +213,7 @@ def run_analysis(
             attempts.append(Attempt(reply, cost))
             status = STATUS_REFUSED if reply.stop_reason == "refusal" else STATUS_TRUNCATED
             break
-        parsed, format_problems, citation_problems = _check(reply, reader, context)
+        parsed, format_problems, citation_problems = check_reply(reply, reader, context.provided_code_paths)
         report = parsed or report
         attempt = Attempt(reply, cost, tuple(format_problems), tuple(citation_problems))
         attempts.append(attempt)

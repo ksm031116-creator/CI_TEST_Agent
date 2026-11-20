@@ -5,8 +5,8 @@ Usage:
   uv run python scripts/evaluate.py --split dev --format json > <path>.json
   uv run python scripts/evaluate.py --split dev --write-stubs
 
-Reads work/runs/ (current model and prompt only), evals/labels/ and
-evals/gradings/. Makes no model call. Without --methods, every method that has
+Reads work/runs/ (current model, and each method's current prompt, only),
+evals/labels/ and evals/gradings/. Makes no model call. Without --methods, every method that has
 a run of the split is compared. Cost, tokens and duration come from the run
 manifests. Code decides the conclusion type, the
 location and the checks; whether a report names the labelled cause comes from
@@ -24,7 +24,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from ci_failure_analyzer.analysis.budget import load_config
-from ci_failure_analyzer.analysis.prompt import PROMPT_VERSION, prompt_sha256
+from ci_failure_analyzer.analysis.prompt import prompt_identity
 from ci_failure_analyzer.evaluation.grading import (
     MATCH,
     MISMATCH,
@@ -35,7 +35,14 @@ from ci_failure_analyzer.evaluation.grading import (
     score_run,
     top_candidate_index,
 )
-from ci_failure_analyzer.evaluation.summary import UNGRADED, case_summary, cost_summary, match_counts, method_summary
+from ci_failure_analyzer.evaluation.summary import (
+    UNGRADED,
+    case_summary,
+    cost_summary,
+    exploration_row,
+    match_counts,
+    method_summary,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 RUNS_ROOT = ROOT / "work" / "runs"
@@ -76,14 +83,14 @@ def stub(manifest: dict, report: dict, report_sha256: str) -> dict:
     }
 
 
-def load_runs(case_ids: list[str], model: str, prompt_hash: str) -> dict[str, list[tuple[dict, dict | None, str | None]]]:
-    """Runs of the current model and prompt per case: (manifest, report, report hash), oldest first."""
+def load_runs(case_ids: list[str], model: str) -> dict[str, list[tuple[dict, dict | None, str | None]]]:
+    """Runs of the current model and of each method's current prompt per case: (manifest, report, report hash), oldest first."""
     runs: dict[str, list] = {case_id: [] for case_id in case_ids}
     for manifest_path in sorted(RUNS_ROOT.glob("*/manifest.json")):
         manifest = read_json(manifest_path)
         if manifest.get("case_id") not in runs:
             continue
-        if manifest.get("model") != model or manifest.get("prompt_sha256") != prompt_hash:
+        if manifest.get("model") != model or manifest.get("prompt_sha256") != prompt_identity(manifest.get("method"))[1]:
             continue
         report_path = manifest_path.parent / "report.json"
         report = report_hash = None
@@ -169,6 +176,18 @@ def print_case_summary(summaries: dict[str, dict]) -> None:
         )
 
 
+def print_exploration(rows: list[dict]) -> None:
+    print("| 사례 | 실행 ID | 모델 호출 | 도구 호출 (거부) | 읽은 파일 | 원인 파일을 읽음 | 원인 줄을 봄 | 닿은 한도 | 비용($) | 소요 시간(초) |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
+    yes_no = {True: "예", False: "**아니오**", None: "-"}
+    for r in rows:
+        print(
+            f"| {r['case_id']} | `{r['run_id']}` | {r['model_calls']} | {r['tool_calls']} ({r['refused_tool_calls']}) "
+            f"| {r['files_read']} | {yes_no[r['cause_file_read']]} | {yes_no[r['cause_line_read']]} "
+            f"| {r['limit_reached'] or '-'} | {_money(r['cost_usd'])} | {_plain(r['duration_seconds'])} |"
+        )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--split", default="dev")
@@ -182,11 +201,10 @@ def main() -> int:
         raise SystemExit("refusing to evaluate the holdout split without --allow-holdout")
 
     config = load_config(ROOT / "configs" / "analysis.toml")
-    prompt_hash = prompt_sha256()
     case_ids = read_json(ROOT / "evals" / "splits" / f"{args.split}.json")["case_ids"]
     case_types = {c: read_json(ROOT / "evals" / "cases" / c / "metadata.json")["case_type"] for c in case_ids}
     labels = {c: read_json(ROOT / "evals" / "labels" / f"{c}.json") for c in case_ids}
-    runs = load_runs(case_ids, config.model, prompt_hash)
+    runs = load_runs(case_ids, config.model)
 
     methods = args.methods or sorted({m["method"] for case_runs in runs.values() for m, _, _ in case_runs})
 
@@ -216,24 +234,32 @@ def main() -> int:
     }
     costs = {m: cost_summary([manifests[s.run_id] for s in rows]) for m, rows in by_method.items()}
     counts = match_counts(scores, case_ids, methods)
+    prompts = dict(zip(methods, map(prompt_identity, methods), strict=True))
+    exploration = [
+        row for s in scores if (row := exploration_row(manifests[s.run_id], labels[s.case_id])) is not None
+    ]
     problems = [(s.run_id, p) for s in scores for p in s.problems]
 
     if args.format == "json":
         result = {
             "model": config.model,
             "effort": config.effort,
-            "prompt_version": PROMPT_VERSION,
-            "prompt_sha256": prompt_hash,
+            "prompts": {m: {"version": version, "sha256": sha} for m, (version, sha) in prompts.items()},
             "grading_spec_version": SPEC_VERSION,
             "split": args.split,
             "methods": {m: {"runs": run_summaries[m], "cases": case_summaries[m], "cost": costs[m]} for m in methods},
             "match_by_case": counts,
+            "exploration": exploration,
             "runs": [asdict(s) | {"cost_usd": manifests[s.run_id].get("cost_usd")} for s in scores],
         }
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 1 if problems else 0
 
-    print(f"모델 `{config.model}` · effort `{config.effort}` · 프롬프트 `{PROMPT_VERSION}` (`{prompt_hash[:12]}`) · 분할 `{args.split}` · 실행 {len(scores)}건")
+    by_prompt: dict[tuple[str, str], list[str]] = {}
+    for method, identity in prompts.items():
+        by_prompt.setdefault(identity, []).append(method)
+    prompt_text = ", ".join(f"{'/'.join(ms)} `{version}` (`{sha[:12]}`)" for (version, sha), ms in by_prompt.items())
+    print(f"모델 `{config.model}` · effort `{config.effort}` · 프롬프트 {prompt_text} · 분할 `{args.split}` · 실행 {len(scores)}건")
     print()
     print("**방식별 집계 (실행 단위)**")
     print()
@@ -258,6 +284,14 @@ def main() -> int:
     print_case_table(scores, case_types, methods)
     print()
     print("- 판정 뒤의 `*`는 사람이 검토한 판정이다. 표시가 없으면 1차 채점자의 판정이거나 코드가 정한 판정이다.")
+    if exploration:
+        print()
+        print("**탐색 기록 (도구를 쓰는 방식의 실행)**")
+        print()
+        print_exploration(exploration)
+        print()
+        print("- 원인 파일과 줄은 정답 레이블의 위치다. 레이블에 코드 위치가 없는 사례는 `-`로 적는다.")
+        print("- 닿은 한도: `tool_calls`(도구 호출), `model_calls`(모델 호출), `cost`(실행당 비용). `-`는 모델이 스스로 탐색을 끝낸 실행이다.")
     if problems:
         print()
         print("**쓸 수 없는 채점 기록**")

@@ -17,6 +17,8 @@ from ci_failure_analyzer.inputs.reader import BundleReader
 
 METHOD_A = "A"
 METHOD_B = "B"
+# Method C starts from method A's text and reads code through tools (docs/agent_design.md).
+METHOD_C = "C"
 
 # Resource limits, fixed before any evaluation run.
 MAX_LOG_LINES = 1500
@@ -157,7 +159,7 @@ def _render_run(reader: BundleReader, junit: JUnitReport) -> tuple[list[str], se
 
 
 def build_context(reader: BundleReader, junit: JUnitReport, method: str) -> AnalysisContext:
-    if method not in (METHOD_A, METHOD_B):
+    if method not in (METHOD_A, METHOD_B, METHOD_C):
         raise ValueError(f"unknown method: {method}")
     out, failed_steps = _render_run(reader, junit)
     log_text, log_total, log_included = _render_log(reader, failed_steps)
